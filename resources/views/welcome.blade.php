@@ -25,10 +25,9 @@
                         class="flex items-center max-w-md mx-auto bg-white rounded-lg">
                         @csrf
                         <input type="hidden" name="apikey" value="aaaaaaaaaaaaaaaaaaaaaa">
-                        <div class="w-full border-2 h-12 focus-within:border-lime-400">
-                            <input type="text"
-                                class="w-full h-full px-4 py-1 text-gray-800 rounded-full focus:outline-none"
-                                placeholder="Query..." name="query">
+                        <div class="w-full border-2 h-32 focus-within:border-lime-400">
+                            <textarea type="text" class="w-full h-full px-4 py-1 text-gray-800 focus:outline-none"
+                                rows="10" placeholder="Query..." name="query"></textarea>
                         </div>
                         <div>
                             <button type="submit"
