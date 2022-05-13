@@ -26,11 +26,58 @@ class OctaveController extends Controller {
         r =0.1;
         initX1=0; initX1d=0;
         initX2=0; initX2d=0;
-        [y,t,x]=lsim(sys*[0;1],r*ones(size(t)),t,[initX1;initX1d;initX2;initX2d;0]);y"';
+        [y,t,x]=lsim(sys*[0;1],r*ones(size(t)),t,[initX1;initX1d;initX2;initX2d;0]);x"';
         // $query = 'octave-cli --eval "pkg load control;ss(0,0,0,0)"';
         // dd($query);
         $output = "";
         exec($query, $output);
+                
+        // return json_encode($output);
+        
+
+        $data = $output;
+        $pattern1 = '/((?:[0-9]+,)*-?[0-9]+(?:\.[0-9]+)?)/';
+        $pattern2 = '/((?:[0-9]+,)*-?[0-9]+(?:\.[0-9]+)[e][+-]?\d+)/';
+        $arr = [];
+        $output = [];
+        $count = 0;
+        $matched = false;
+        $pattern = $pattern2;
+
+        foreach ($data as $row) {
+            if(preg_match($pattern2, $row) != 0) {
+                $pattern = $pattern2;
+            }
+            elseif(preg_match($pattern1, $row) != 0) {
+                $pattern = $pattern1;
+            }
+            else {
+                $pattern = $pattern1;
+            }
+            while( preg_match($pattern, $row) != 0 ) {
+                $matched = true;
+                preg_match($pattern, $row, $out, PREG_OFFSET_CAPTURE);
+                array_push($arr, $out[0][0]);
+                $row = preg_replace("/".$out[0][0]."/", '', $row, 1);
+                $count++;
+            }
+            
+            if($matched) {
+                $help = [];
+                $index = 0;
+                foreach ($arr as $el) {
+                    $help["x".$index] = $el;
+                    $index++;
+                }
+                array_push($output, $help);
+                $arr = [];
+                $help = [];
+            }
+            $matched = false;
+        }
+
+        return json_encode($output);
+
         // dd($output);
         $resp = [
             "success" => "true",
