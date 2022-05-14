@@ -78,7 +78,7 @@ class OctaveController extends Controller {
             while( preg_match($pattern, $row) != 0 ) {
                 $matched = true;
                 preg_match($pattern, $row, $out, PREG_OFFSET_CAPTURE);
-                array_push($arr, $out[0][0]);
+                array_push($arr, (float)$out[0][0]);
                 $row = preg_replace("/".$out[0][0]."/", '', $row, 1);
                 $count++;
             }
