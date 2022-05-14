@@ -23,6 +23,7 @@ Route::middleware('api.key')->group(function () {
     // Route::get('/statistics', [LocationController::class, "index"])->name("statistics");
 
     Route::get('/octave', [OctaveController::class, "execQuery"])->name("execQuery");
+    Route::get('/octaveAnimation', [OctaveController::class, "animationQuery"])->name("animationQuery");
     // Route::get("octave", function (Request $request) {
     //     return "Hi";
     // })->name("execQuery");

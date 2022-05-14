@@ -5,11 +5,33 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Symfony\Component\Process\Process;
 
+use App\Models\Log;
+
 class OctaveController extends Controller {
+
     public function execQuery(Request $request) {
         $preparedQuery = $request->input("query");
-        $query = $preparedQuery;
-        // $query = 'octave-cli --eval "' . $query . '"';
+        // $query = $preparedQuery;
+        
+        $query = 'octave-cli --eval "'.$preparedQuery.'"';
+
+        $output = "";
+        exec($query, $output);
+
+        // return json_encode($output);
+
+        $resp = [
+            "success" => "true",
+            "type" => "generalQuery",
+            "data" => $output
+        ];
+        return json_encode($resp);
+    }
+
+    public function animationQuery(Request $request) {
+        $preparedQuery = $request->input("query");
+        $r = $preparedQuery == null ? "0.1": $preparedQuery;
+
         $query = 'octave-cli --eval "m1 = 2500; m2 = 320;
         k1 = 80000; k2 = 500000;
         b1 = 350; b2 = 15020;
@@ -23,13 +45,12 @@ class OctaveController extends Controller {
         pkg load control;
         sys = ss(Aa-Ba(:,1)*K,Ba,Ca,Da);
         t = 0:0.01:5;
-        r =0.1;
+        r = '.$r.';
         initX1=0; initX1d=0;
         initX2=0; initX2d=0;
-        [y,t,x]=lsim(sys*[0;1],r*ones(size(t)),t,[initX1;initX1d;initX2;initX2d;0]);x"';
-        // $query = 'octave-cli --eval "pkg load control;ss(0,0,0,0)"';
-        // dd($query);
-        $output = "";
+        [y,t,x]=lsim(sys*[0;1],r*ones(size(t)),t,[initX1;initX1d;initX2;initX2d;0]);y"';
+        
+        $output = [];
         exec($query, $output);
                 
         // return json_encode($output);
@@ -76,13 +97,14 @@ class OctaveController extends Controller {
             $matched = false;
         }
 
-        return json_encode($output);
-
-        // dd($output);
         $resp = [
             "success" => "true",
+            "type" => "animationQuery",
+            "r" => $r,
             "data" => $output
         ];
         return json_encode($resp);
     }
+
+    
 }
