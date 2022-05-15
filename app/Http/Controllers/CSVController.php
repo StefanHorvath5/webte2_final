@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 
 class CSVController extends Controller {
 
-    public function get_csv(){
+    public function getCSV(){
 
         $logs = Log::get();
 
@@ -44,7 +44,7 @@ class CSVController extends Controller {
                 $log->query,
                 $log->status,
                 $log->error_description,
-                $log->timestamp
+                $log->created_at
             ]);
         }
         fclose($handle);
