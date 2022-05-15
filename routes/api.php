@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OctaveController;
+use App\Http\Controllers\CSVController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,8 @@ Route::middleware('api.key')->group(function () {
 
     Route::get('/octave', [OctaveController::class, "execQuery"])->name("execQuery");
     Route::get('/octaveAnimation', [OctaveController::class, "animationQuery"])->name("animationQuery");
+
+    Route::get('/CSV', [CSVController::class, 'get_csv'])->name('CSV');
     // Route::get("octave", function (Request $request) {
     //     return "Hi";
     // })->name("execQuery");
