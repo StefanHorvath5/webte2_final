@@ -74,6 +74,11 @@
         </div>
         
         <div>
-            {{ \App\Models\Log::all(); }}
+            @foreach(App\Models\Log::all() as $log)
+                <pre>
+                {{ $log }}
+                </pre>
+                <hr/>
+            @endforeach
         </div>
 </x-guest-layout>
