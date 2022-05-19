@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\OctaveController;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +18,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('welcome')->with("secondLanguage", App::getLocale() == "en" ? "SK" : "EN");
+})->middleware(["language"]);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
+
+
+
+Route::get('/changeLang/{lang}', function ($lang) {
+    session()->put('applocale', strtolower($lang));
+    App::setLocale(strtolower($lang));
+    return Redirect::back();
+})->name("changeLang");
 
 require __DIR__ . '/auth.php';
