@@ -30,6 +30,9 @@ Route::middleware('api.key')->group(function () {
     Route::get('/CSV', [CSVController::class, 'getCSV'])->name('CSV');
 
     Route::post('/mail', [MailController::class, 'mailSend'])->name('mailSend');
+    
+    Route::get('/instructions', function () { return view('instructions'); })->name('instructions');
+
     // Route::get("octave", function (Request $request) {
     //     return "Hi";
     // })->name("execQuery");

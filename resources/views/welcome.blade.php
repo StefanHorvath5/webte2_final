@@ -113,6 +113,27 @@
                             </button>
                         </div>
                     </form>
+
+                    <h3>
+                        {{ __("Instructions page") }}
+                    </h3>
+
+                    <form action="{{ route("instructions") }}" method="get"
+                        class="flex items-center max-w-md mx-auto bg-white rounded-lg">
+                        @csrf
+                        <input type="hidden" name="apikey" value="aaaaaaaaaaaaaaaaaaaaaa">
+                        <div>
+                            <button type="submit"
+                                class="flex items-center bg-blue-500 justify-center w-12 h-12 text-white rounded-r-lg"
+                                :class="(search.length > 0) ? 'bg-purple-500' : 'bg-gray-500 cursor-not-allowed'"
+                                :disabled="search.length == 0">
+                                {{ __("Go to instructions") }}
+                            </button>
+                        </div>
+                    </form>
+
+
+
                 </div>
             </div>
         </div>

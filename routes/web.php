@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OctaveController;
+use App\Http\Controllers\PDFController;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
@@ -32,5 +33,8 @@ Route::get('/changeLang/{lang}', function ($lang) {
     App::setLocale(strtolower($lang));
     return Redirect::back();
 })->name("changeLang");
+
+Route::get('/downloadPDF', [PDFController::class, 'downloadPDF'])->name('downloadPDF');
+
 
 require __DIR__ . '/auth.php';
