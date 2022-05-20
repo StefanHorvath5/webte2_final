@@ -16,11 +16,11 @@ class MailController extends Controller {
         $path =  public_path("files/download.csv");
 
         try {
-            Mail::to("webte2finalmail@gmail.com")->send(new Notification($path));
+            Mail::to(env('MAIL_TO_ADDRESS'))->send(new Notification($path));
         } catch (\Exception $e) {
             return ['success', $e->getMessage()];
         }
 
-        return "Mail with logs sent";
+        return "Mail with logs sent to ".env('MAIL_TO_ADDRESS');
     }
 }
