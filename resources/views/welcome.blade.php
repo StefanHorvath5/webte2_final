@@ -146,4 +146,6 @@
             <hr />
             @endforeach
         </div>
+
+        <div id="animationDiv"></div>
 </x-guest-layout>
