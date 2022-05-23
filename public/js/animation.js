@@ -938,55 +938,36 @@ var data2 = []; // setInterval(async () => {
 //     draw();
 // }, 5000);
 
-var draw = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-    var i, _i, graph;
+var draw = function draw() {
+  // let graph = [trace1, trace2, trace3, trace4];
+  // Plotly.newPlot(graf, graph, { responsive: false });
+  for (var i = 0; i < data1[0].length; i++) {
+    trace1.y.push(data1[0][i]["x0"]);
+    trace1.x.push(i);
+  }
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            // let graph = [trace1, trace2, trace3, trace4];
-            // Plotly.newPlot(graf, graph, { responsive: false });
-            for (i = 0; i < data1[0].length; i++) {
-              trace1.y.push(data1[0][i]["x0"]);
-              trace1.x.push(i);
-            }
+  for (var _i = 0; _i < data2[0].length; _i++) {
+    trace2.y.push(data2[0][_i]["x3"]);
+    trace2.x.push(_i);
+    trace3.y.push(data2[0][_i]["x0"]);
+    trace3.x.push(_i);
+    trace4.y.push(data2[0][_i]["x1"]);
+    trace4.x.push(_i);
+  }
 
-            for (_i = 0; _i < data2[0].length; _i++) {
-              trace2.y.push(data2[0][_i]["x3"]);
-              trace2.x.push(_i);
-              trace3.y.push(data2[0][_i]["x0"]);
-              trace3.x.push(_i);
-              trace4.y.push(data2[0][_i]["x1"]);
-              trace4.x.push(_i);
-            }
-
-            console.log(trace1);
-            graph = [trace1, trace2, trace3, trace4];
-            Plotly.newPlot(graf, graph, {
-              responsive: false
-            }); // var cnt = 0;
-            // var interval = setInterval(function() {
-            // Plotly.extendTraces(graf, {
-            //     x: [trace1.x, trace2.x, trace3.x, trace4.x],
-            //     y: [trace1.y, trace2.y, trace3.y, trace4.y]
-            // }, [0, 1, 2, 3])
-            // if(++cnt === 100) clearInterval(interval);
-            // }, 300);
-
-          case 5:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-
-  return function draw() {
-    return _ref.apply(this, arguments);
-  };
-}();
+  console.log(trace1);
+  var graph = [trace1, trace2, trace3, trace4];
+  Plotly.newPlot(graf, graph, {
+    responsive: false
+  }); // var cnt = 0;
+  // var interval = setInterval(function() {
+  // Plotly.extendTraces(graf, {
+  //     x: [trace1.x, trace2.x, trace3.x, trace4.x],
+  //     y: [trace1.y, trace2.y, trace3.y, trace4.y]
+  // }, [0, 1, 2, 3])
+  // if(++cnt === 100) clearInterval(interval);
+  // }, 300);
+};
 
 var font = "Arial";
 var fontsize = 20;
@@ -994,7 +975,7 @@ var baselayer = new Konva.Stage({
   container: "simulationAnim",
   // id of container <div>
   width: 850,
-  height: 400
+  height: 200
 });
 var animlayer = new Konva.Layer();
 baselayer.add(animlayer);
@@ -1041,7 +1022,7 @@ var animationButton = document.querySelector("#animationButton");
 imageObj.onload = function () {
   image = new Konva.Image({
     x: 0,
-    y: 85,
+    y: 65,
     image: imageObj,
     width: 200,
     height: 75
@@ -1049,7 +1030,7 @@ imageObj.onload = function () {
   animlayer.add(image);
   image2 = new Konva.Image({
     x: 270,
-    y: 85,
+    y: 65,
     image: imageObj,
     width: 200,
     height: 75
@@ -1058,15 +1039,12 @@ imageObj.onload = function () {
   animlayer.add(image2);
   var anim = new Konva.Animation(function (frame) {});
   var animI = 0;
-  animationButton.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+  animationButton.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
     var url, request, respData, respJSON, i;
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context.prev = _context.next) {
           case 0:
-            // get graph
-            // get point
-            // Plotly.restyle
             anim.stop();
             data1 = [];
             data2 = [];
@@ -1077,16 +1055,16 @@ imageObj.onload = function () {
             request = new Request(url, {
               method: "GET"
             });
-            _context2.next = 7;
+            _context.next = 7;
             return fetch(request);
 
           case 7:
-            respData = _context2.sent;
-            _context2.next = 10;
+            respData = _context.sent;
+            _context.next = 10;
             return respData.json();
 
           case 10:
-            respJSON = _context2.sent;
+            respJSON = _context.sent;
             data1.push(respJSON.data.y);
             data2.push(respJSON.data.x);
             console.log(data2[0]);
@@ -1102,18 +1080,20 @@ imageObj.onload = function () {
               i++;
             }, animlayer);
             anim.start();
-            _context2.next = 19;
-            return draw();
-
-          case 19:
+            draw();
+            document.querySelector("#simulaciaGraf").scrollIntoView({
+              behavior: "smooth",
+              block: "end",
+              inline: "nearest"
+            });
             animI = animI === 0 ? 1 : 0;
 
           case 20:
           case "end":
-            return _context2.stop();
+            return _context.stop();
         }
       }
-    }, _callee2);
+    }, _callee);
   }))); // setInterval(async () => {
   //     anim.stop();
   //     data1 = [];

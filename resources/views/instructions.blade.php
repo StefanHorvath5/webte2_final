@@ -1,3 +1,6 @@
+@if(!isset($download))
+    @include('layouts.customNavigation')
+@endif
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +19,7 @@
 
     <body>
 
-    @if(!isset($download))
+    <!-- @if(!isset($download))
         <div class="top-0 left-0 px-6 py-3 flex items-center border-b-2 border-black border-opacity-5 w-full">
             <h4 class=" border-r-2 border-black border-opacity-20 text-blue-600 font-extrabold text-xl pr-6 mr-6">
                 <a href="http://localhost">
@@ -45,7 +48,7 @@
             @endif
             
         </div>
-        @endif
+        @endif -->
 
 
         <div>

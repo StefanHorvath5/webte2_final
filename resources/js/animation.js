@@ -86,10 +86,10 @@ let data2 = [];
 //     draw();
 // }, 5000);
 
-const draw = async () => {
+const draw = () => {
     // let graph = [trace1, trace2, trace3, trace4];
     // Plotly.newPlot(graf, graph, { responsive: false });
-    
+
     for (let i = 0; i < data1[0].length; i++) {
         trace1.y.push(data1[0][i]["x0"]);
         trace1.x.push(i);
@@ -128,7 +128,7 @@ let fontsize = 20;
 let baselayer = new Konva.Stage({
     container: "simulationAnim", // id of container <div>
     width: 850,
-    height: 400,
+    height: 200,
 });
 let animlayer = new Konva.Layer();
 baselayer.add(animlayer);
@@ -176,7 +176,7 @@ const animationButton = document.querySelector("#animationButton");
 imageObj.onload = function () {
     image = new Konva.Image({
         x: 0,
-        y: 85,
+        y: 65,
         image: imageObj,
         width: 200,
         height: 75,
@@ -185,7 +185,7 @@ imageObj.onload = function () {
 
     image2 = new Konva.Image({
         x: 270,
-        y: 85,
+        y: 65,
         image: imageObj,
         width: 200,
         height: 75,
@@ -197,9 +197,7 @@ imageObj.onload = function () {
     let animI = 0;
     animationButton.addEventListener("click", async () => {
         
-        // get graph
-        // get point
-        // Plotly.restyle
+        
                 
         anim.stop();
         data1 = [];
@@ -227,7 +225,8 @@ imageObj.onload = function () {
             i++;
         }, animlayer);
         anim.start();
-        await draw();
+        draw();
+        document.querySelector("#simulaciaGraf").scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
         animI = animI === 0 ? 1 : 0;
     });
     // setInterval(async () => {

@@ -32,12 +32,24 @@
     </h3>
     @if (isset($secondLanguage) && isset($currentLanguage))
     <h3>
-
+    
+        @if($currentLanguage == "SK")
+        🇸🇰
+        @endif
+        @if($currentLanguage == "EN")
+        🇬🇧
+        @endif
         <a href="{{ route("changeLang", ["lang" => $currentLanguage]) }}"
             class="text-black hover:text-blue-600 underline text-opacity-50 mr-1">{{ $currentLanguage }}</a>
         /
         <a href="{{ route("changeLang", ["lang" => $secondLanguage]) }}"
             class="ml-1 text-black hover:text-blue-600">{{ $secondLanguage }}</a>
+        @if($currentLanguage == "EN")
+        🇸🇰
+        @endif
+        @if($currentLanguage == "SK")
+        🇬🇧
+        @endif
     </h3>
     @endif
 
