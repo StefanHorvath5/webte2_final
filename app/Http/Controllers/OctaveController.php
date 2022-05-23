@@ -35,14 +35,14 @@ class OctaveController extends Controller {
         return json_encode($resp);
     }
 
-    public function animationQuery(Request $request) {
-        $requestQuery = $request->input("query");
-        $r = $requestQuery == null ? "0.1": $requestQuery;
-        $preparedQuery = 'm1 = 2500; m2 = 320; k1 = 80000; k2 = 500000; b1 = 350; b2 = 15020; A=[0 1 0 0;-(b1*b2)/(m1*m2) 0 ((b1/m1)*((b1/m1)+(b1/m2)+(b2/m2)))-(k1/m1) -(b1/m1);b2/m2 0 -((b1/m1)+(b1/m2)+(b2/m2)) 1;k2/m2 0 -((k1/m1)+(k1/m2)+(k2/m2)) 0]; B=[0 0;1/m1 (b1*b2)/(m1*m2);0 -(b2/m2);(1/m1)+(1/m2) -(k2/m2)]; C=[0 0 1 0]; D=[0 0]; Aa = [[A,[0 0 0 0]\'];[C, 0]]; Ba = [B;[0 0]]; Ca = [C,0]; Da = D; K = [0 2.3e6 5e8 0 8e6]; pkg load control; sys = ss(Aa-Ba(:,1)*K,Ba,Ca,Da); t = 0:0.01:5; r = '.$r.'; initX1=0; initX1d=0; initX2=0; initX2d=0; [y,t,x]=lsim(sys*[0;1],r*ones(size(t)),t,[initX1;initX1d;initX2;initX2d;0]);t';
+    private function callAnim($r, $dim) {
+        $preparedQuery = 'm1 = 2500; m2 = 320; k1 = 80000; k2 = 500000; b1 = 350; b2 = 15020; A=[0 1 0 0;-(b1*b2)/(m1*m2) 0 ((b1/m1)*((b1/m1)+(b1/m2)+(b2/m2)))-(k1/m1) -(b1/m1);b2/m2 0 -((b1/m1)+(b1/m2)+(b2/m2)) 1;k2/m2 0 -((k1/m1)+(k1/m2)+(k2/m2)) 0]; B=[0 0;1/m1 (b1*b2)/(m1*m2);0 -(b2/m2);(1/m1)+(1/m2) -(k2/m2)]; C=[0 0 1 0]; D=[0 0]; Aa = [[A,[0 0 0 0]\'];[C, 0]]; Ba = [B;[0 0]]; Ca = [C,0]; Da = D; K = [0 2.3e6 5e8 0 8e6]; pkg load control; sys = ss(Aa-Ba(:,1)*K,Ba,Ca,Da); t = 0:0.01:5; r = '.$r.'; initX1=0; initX1d=0; initX2=0; initX2d=0; [y,t,x]=lsim(sys*[0;1],r*ones(size(t)),t,[initX1;initX1d;initX2;initX2d;0]); '.$dim;
         $query = 'octave-cli --eval "'.$preparedQuery.'" 2>&1 ';
 
         $output = [];
         $octaveOutput = exec($query, $output, $isError);
+
+        // return json_encode($output);
         
         OctaveController::createLog($preparedQuery, $octaveOutput, $isError);
         
@@ -84,11 +84,28 @@ class OctaveController extends Controller {
             }
         }
 
+        return ['err' => $isError, 'out' => $isError ? $octaveOutput : $output];
+    }
+
+    public function animationQuery(Request $request) {
+        $requestQuery = $request->input("query");
+        $r = $requestQuery == null ? "0.1": $requestQuery;
+
+        $x = OctaveController::callAnim($r,'x');
+        $y = OctaveController::callAnim($r,'y');
+        $t = OctaveController::callAnim($r,'t');
+        
+        $isError = $x['err'] || $y['err'] || $t['err'];
+
         $resp = [
             "success" => $isError ? "false" : "true",
             "type" => "animationQuery",
             "r" => $r,
-            "data" => $isError ? $octaveOutput : $output
+            "data" => [
+                'x' => $x['out'],
+                'y' => $y['out'],
+                't' => $t['out']
+            ]
         ];
 
         return json_encode($resp);
