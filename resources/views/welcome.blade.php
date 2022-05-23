@@ -138,14 +138,20 @@
             </div>
         </div>
 
-        <div>
+        {{-- <div>
             @foreach(App\Models\Log::all() as $log)
             <pre>
                 {{ $log }}
-            </pre>
-            <hr />
-            @endforeach
-        </div>
+        </pre>
+        <hr />
+        @endforeach
+    </div> --}}
 
-        <div id="animationDiv"></div>
+    <div id="animationDiv">
+        <button id="animationButton">
+            spusti animaciu
+        </button>
+        <div id="simulationAnim" style="border: black 1px solid; margin-left: 79px"></div>
+        <div id="simulaciaGraf"></div>
+    </div>
 </x-guest-layout>

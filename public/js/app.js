@@ -5095,43 +5095,255 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var animationDiv = document.querySelector("#animationDiv");
+var graf = document.querySelector("#simulaciaGraf"); // let r = null;
+// setInterval(async () => {
+//     let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
+//     if (r !== null) {
+//         url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&query=${r}`;
+//     }
+//     const request = new Request(url, {
+//         method: "GET",
+//     });
+//     const respData = await fetch(request);
+//     const respJSON = await respData.json();
+//     console.log(respJSON);
+//     animationDiv.innerHTML = "r: " + respJSON.r;
+//     r = respJSON.r;
+// }, 1000);
+
+var trace1 = {
+  x: [],
+  y: [],
+  type: "scatter",
+  line: {
+    color: "rgba(253,96,178,1)",
+    width: 3
+  },
+  name: "Sinus"
+};
+var trace2 = {
+  x: [],
+  y: [],
+  type: "scatter",
+  line: {
+    color: "rgb(76,226,245,1)",
+    width: 3
+  },
+  name: "Cosinus"
+};
+var trace3 = {
+  x: [],
+  y: [],
+  type: "scatter",
+  line: {
+    color: "rgb(76,169,250)",
+    width: 3
+  },
+  name: "Cosinus"
+};
+var trace4 = {
+  x: [],
+  y: [],
+  type: "scatter",
+  line: {
+    color: "rgb(163,76,245)",
+    width: 3
+  },
+  name: "Cosinus"
+};
 var r = null;
-setInterval( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-  var url, request, respData, respJSON;
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
+var data1 = [];
+var data2 = []; // setInterval(async () => {
+//     data1 = [];
+//     data2 = [];
+//     let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
+//     if (r !== null) {
+//         url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&query=${r}`;
+//     }
+//     const request = new Request(url, {
+//         method: "GET",
+//     });
+//     const respData = await fetch(request);
+//     const respJSON = await respData.json();
+//     data1.push(respJSON.data.y);
+//     data2.push(respJSON.data.x);
+//     // console.log("data1 ");
+//     // console.log("data2 ");
+//     draw();
+// }, 5000);
 
-          if (r !== null) {
-            url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&query=".concat(r);
-          }
+function draw() {
+  for (var i = 0; i < data1[0].length; i++) {
+    trace1.y.push(data1[0][i]["x0"]);
+    trace1.x.push(i);
+  }
 
-          request = new Request(url, {
-            method: "GET"
-          });
-          _context.next = 5;
-          return fetch(request);
+  for (var _i = 0; _i < data2[0].length; _i++) {
+    trace2.y.push(data2[0][_i]["x3"]);
+    trace2.x.push(_i);
+    trace3.y.push(data2[0][_i]["x0"]);
+    trace3.x.push(_i);
+    trace4.y.push(data2[0][_i]["x1"]);
+    trace4.x.push(_i);
+  }
 
-        case 5:
-          respData = _context.sent;
-          _context.next = 8;
-          return respData.json();
+  console.log(trace1);
+  var graph = [trace1, trace2, trace3, trace4];
+  Plotly.newPlot(graf, graph, {
+    responsive: false
+  });
+}
 
-        case 8:
-          respJSON = _context.sent;
-          console.log(respJSON);
-          animationDiv.innerHTML = "r: " + respJSON.r;
-          r = respJSON.r;
+var font = "Arial";
+var fontsize = 20;
+var baselayer = new Konva.Stage({
+  container: "simulationAnim",
+  // id of container <div>
+  width: 850,
+  height: 400
+});
+var animlayer = new Konva.Layer();
+baselayer.add(animlayer);
 
-        case 12:
-        case "end":
-          return _context.stop();
+function drawRect(xpos, ypos, text) {
+  var group = new Konva.Group({
+    draggable: false
+  });
+  var NewRect = new Konva.Rect({
+    x: xpos,
+    y: ypos,
+    width: 70,
+    height: 100,
+    fill: "rgb(0,100,0)",
+    stroke: "rgb(0,0,0)",
+    strokeWidth: 4,
+    lineJoin: "round"
+  });
+  group.add(NewRect);
+  var NewText = new Konva.Text({
+    x: xpos,
+    y: ypos,
+    width: 70,
+    height: 100,
+    align: "center",
+    verticalAlign: "middle",
+    text: text,
+    fontSize: fontsize,
+    fontFamily: font,
+    fill: "rgb(255,255,255)"
+  });
+  group.add(NewText);
+  animlayer.add(group);
+  return group;
+}
+
+var rect1 = drawRect(200, 50, "m1");
+var rect2 = drawRect(470, 50, "m2");
+var imageObj = new Image();
+var image;
+var image2;
+var animationButton = document.querySelector("#animationButton");
+
+imageObj.onload = function () {
+  image = new Konva.Image({
+    x: 0,
+    y: 85,
+    image: imageObj,
+    width: 200,
+    height: 75
+  });
+  animlayer.add(image);
+  image2 = new Konva.Image({
+    x: 270,
+    y: 85,
+    image: imageObj,
+    width: 200,
+    height: 75
+  });
+  animlayer.add(image);
+  animlayer.add(image2);
+  var anim = new Konva.Animation(function (frame) {});
+  var animI = 0;
+  animationButton.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+    var url, request, respData, respJSON, i;
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            anim.stop();
+            data1 = [];
+            data2 = [];
+            url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa"; // if (animI === 1) {
+            //     url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&iteration='1'`;
+            // }
+
+            request = new Request(url, {
+              method: "GET"
+            });
+            _context.next = 7;
+            return fetch(request);
+
+          case 7:
+            respData = _context.sent;
+            _context.next = 10;
+            return respData.json();
+
+          case 10:
+            respJSON = _context.sent;
+            data1.push(respJSON.data.y);
+            data2.push(respJSON.data.x);
+            console.log(data2[0]);
+            i = 0;
+            anim = new Konva.Animation(function (frame) {
+              if (i === data2[0].length) {
+                i = 0;
+                anim.stop();
+              }
+
+              image2.scaleX(1 - data2[0][i]["x3"] / 5);
+              rect2.x(data2[0][i]["x3"] + rect2.x());
+              i++;
+            }, animlayer);
+            anim.start();
+            draw();
+            animI = animI === 0 ? 1 : 0;
+
+          case 19:
+          case "end":
+            return _context.stop();
+        }
       }
-    }
-  }, _callee);
-})), 1000);
+    }, _callee);
+  }))); // setInterval(async () => {
+  //     anim.stop();
+  //     data1 = [];
+  //     data2 = [];
+  //     let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
+  //     if (r !== null) {
+  //         url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&iteration='1'`;
+  //     }
+  //     const request = new Request(url, {
+  //         method: "GET",
+  //     });
+  //     const respData = await fetch(request);
+  //     const respJSON = await respData.json();
+  //     data1.push(respJSON.data.y);
+  //     data2.push(respJSON.data.x);
+  //     let i = 0;
+  //     anim = new Konva.Animation(function (frame) {
+  //         if (i === data2[0].length) {
+  //             i = 0;
+  //         }
+  //         image2.scaleX(1 + data2[0][i]["x3"]);
+  //         rect2.x(data2[0][i]["x3"] + rect2.x());
+  //         i++;
+  //     }, animlayer);
+  //     anim.start();
+  //     draw();
+  // }, 5000);
+};
+
+imageObj.src = "/storage/images/spring.png";
 
 /***/ }),
 
