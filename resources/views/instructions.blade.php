@@ -6,9 +6,46 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
+
+        @if(!isset($download))
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&amp;display=swap">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        @endif
+
     </head>
 
     <body>
+
+    @if(!isset($download))
+        <div class="top-0 left-0 px-6 py-3 flex items-center border-b-2 border-black border-opacity-5 w-full">
+            <h4 class=" border-r-2 border-black border-opacity-20 text-blue-600 font-extrabold text-xl pr-6 mr-6">
+                <a href="http://localhost">
+                    Záverečné zadanie</a>
+            </h4>
+            <h3 class="pr-6">
+                <a href="{{ route("logs") }}" class="text-black hover:text-blue-500">
+                    Logy
+                </a>
+            </h3>
+
+            <h3 class="pr-6">
+                <a href="{{ route("instructions") }}" class="text-black hover:text-blue-500">
+                    Inštrukcie
+                </a>
+            </h3>
+            @if (isset($secondLanguage) && isset($currentLanguage))
+            <h3>
+
+                <a href="{{ route("changeLang", ["lang" => $currentLanguage]) }}"
+                    class="text-black hover:text-blue-600 underline text-opacity-50 mr-1">{{ $currentLanguage }}</a>
+                /
+                <a href="{{ route("changeLang", ["lang" => $secondLanguage]) }}"
+                    class="ml-1 text-black hover:text-blue-600">{{ $secondLanguage }}</a>
+            </h3>
+            @endif
+            
+        </div>
+        @endif
 
 
         <div>

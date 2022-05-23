@@ -86,7 +86,10 @@ let data2 = [];
 //     draw();
 // }, 5000);
 
-function draw() {
+const draw = async () => {
+    // let graph = [trace1, trace2, trace3, trace4];
+    // Plotly.newPlot(graf, graph, { responsive: false });
+    
     for (let i = 0; i < data1[0].length; i++) {
         trace1.y.push(data1[0][i]["x0"]);
         trace1.x.push(i);
@@ -104,6 +107,19 @@ function draw() {
     console.log(trace1);
     let graph = [trace1, trace2, trace3, trace4];
     Plotly.newPlot(graf, graph, { responsive: false });
+
+    // var cnt = 0;
+
+    // var interval = setInterval(function() {
+
+    // Plotly.extendTraces(graf, {
+    //     x: [trace1.x, trace2.x, trace3.x, trace4.x],
+    //     y: [trace1.y, trace2.y, trace3.y, trace4.y]
+    // }, [0, 1, 2, 3])
+
+    // if(++cnt === 100) clearInterval(interval);
+    // }, 300);
+
 }
 
 let font = "Arial";
@@ -180,10 +196,15 @@ imageObj.onload = function () {
     let anim = new Konva.Animation(function (frame) {});
     let animI = 0;
     animationButton.addEventListener("click", async () => {
+        
+        // get graph
+        // get point
+        // Plotly.restyle
+                
         anim.stop();
         data1 = [];
         data2 = [];
-        let url = `/api/octaveAnimation?apikey=${process.env.MIX_API_KEY}`;
+        let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
         // if (animI === 1) {
         //     url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&iteration='1'`;
         // }
@@ -202,11 +223,11 @@ imageObj.onload = function () {
                 anim.stop();
             }
             image2.scaleX(1 - data2[0][i]["x3"] / 5);
-            rect2.x(data2[0][i]["x3"] + rect2.x());
+            rect2.x( image2.width()*image2.scaleX() - image2.width() );
             i++;
         }, animlayer);
         anim.start();
-        draw();
+        await draw();
         animI = animI === 0 ? 1 : 0;
     });
     // setInterval(async () => {
