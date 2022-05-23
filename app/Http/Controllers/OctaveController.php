@@ -20,8 +20,11 @@ class OctaveController extends Controller {
     }
 
     public function execQuery(Request $request) {
-        $preparedQuery = $request->input("query");
+        // $preparedQuery = $request->input("query");
+        $preparedQuery = json_decode($request->getContent(), true)["query"];
+
         $query = 'octave-cli --eval "' . $preparedQuery . '" 2>&1 ';
+        // return json_encode([$query, $preparedQuery]);
         $output = "";
         $octaveOutput = exec($query, $output, $isError);
 
@@ -33,6 +36,7 @@ class OctaveController extends Controller {
             "data" => $isError ? $octaveOutput : $output
         ];
         return json_encode($resp);
+        // return view('welcome', ["data" => $resp]);
     }
 
     private function callAnim($r, $dim, $iteration) {

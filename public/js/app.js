@@ -5360,6 +5360,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./animation */ "./resources/js/animation.js");
 
+__webpack_require__(/*! ./outputCAS */ "./resources/js/outputCAS.js");
+
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_0__["default"].start();
@@ -5394,6 +5396,63 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/outputCAS.js":
+/*!***********************************!*\
+  !*** ./resources/js/outputCAS.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var submitButton = document.querySelector("#submitCommand");
+submitButton.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+  var outputDiv, inputCommand, url, request, respData, respJSON;
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          outputDiv = document.querySelector("#outputDiv");
+          console.log("HAAAAAAAAAAAAA");
+          inputCommand = document.querySelector("#inputCommand").value;
+          console.log(inputCommand);
+          url = "/api/octave?apikey=aaaaaaaaaaaaaaaaaaaaaa";
+          request = new Request(url, {
+            method: "POST",
+            body: JSON.stringify({
+              "query": inputCommand
+            })
+          });
+          _context.next = 8;
+          return fetch(request);
+
+        case 8:
+          respData = _context.sent;
+          _context.next = 11;
+          return respData.json();
+
+        case 11:
+          respJSON = _context.sent;
+          console.log(respJSON);
+          outputDiv.innerHTML = respJSON.success === "true" ? respJSON.data : respJSON.success;
+
+        case 14:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _callee);
+})));
 
 /***/ }),
 

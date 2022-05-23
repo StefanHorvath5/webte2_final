@@ -24,7 +24,7 @@ Route::middleware('api.key')->group(function () {
 
     // Route::get('/statistics', [LocationController::class, "index"])->name("statistics");
 
-    Route::get('/octave', [OctaveController::class, "execQuery"])->name("execQuery");
+    Route::post('/octave', [OctaveController::class, "execQuery"])->name("execQuery");
     Route::get('/octaveAnimation', [OctaveController::class, "animationQuery"])->name("animationQuery");
 
     Route::get('/CSV', [CSVController::class, 'getCSV'])->name('CSV');
@@ -32,6 +32,10 @@ Route::middleware('api.key')->group(function () {
     Route::post('/mail', [MailController::class, 'mailSend'])->name('mailSend');
     
     Route::get('/instructions', function () { return view('instructions'); })->name('instructions');
+
+    Route::get('/logs', function () { return view('logs'); })->name('logs');
+
+
 
     // Route::get("octave", function (Request $request) {
     //     return "Hi";
