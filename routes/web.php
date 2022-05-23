@@ -19,8 +19,8 @@ use Illuminate\Support\Facades\Session;
 */
 
 Route::get('/', function () {
-    return view('welcome')->with("secondLanguage", App::getLocale() == "en" ? "SK" : "EN");
-})->middleware(["language"]);
+    return view('welcome')->with("secondLanguage", App::getLocale() == "en" ? "SK" : "EN")->with("currentLanguage", App::getLocale() == "en" ? "EN" : "SK");
+})->middleware(["language"])->name("welcome");
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -36,5 +36,13 @@ Route::get('/changeLang/{lang}', function ($lang) {
 
 Route::get('/downloadPDF', [PDFController::class, 'downloadPDF'])->name('downloadPDF');
 
+
+Route::get('/instructions', function () {
+    return view('instructions')->with("secondLanguage", App::getLocale() == "en" ? "SK" : "EN")->with("currentLanguage", App::getLocale() == "en" ? "EN" : "SK");
+})->middleware(["language"])->name('instructions');
+
+Route::get('/logs', function () {
+    return view('logs')->with("secondLanguage", App::getLocale() == "en" ? "SK" : "EN")->with("currentLanguage", App::getLocale() == "en" ? "EN" : "SK");
+})->middleware(["language"])->name('logs');
 
 require __DIR__ . '/auth.php';

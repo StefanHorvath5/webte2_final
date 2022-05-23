@@ -15,7 +15,7 @@ class EnsureApiKeyIsValid {
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next) {
-        if (!$key = $request->get('apikey') or $key !== config('app.api_key')) {
+        if (!$key = $request->get('apikey') or $key !== env('MIX_API_KEY')) {
             return response("Unauthorized", 401);
         }
         return $next($request);

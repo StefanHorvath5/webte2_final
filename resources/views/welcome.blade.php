@@ -1,48 +1,70 @@
 <x-guest-layout>
-    @if (Route::has('login'))
-    <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
+    @include('layouts.customNavigation')
+    {{-- @if (Route::has('login')) --}}
+    {{-- <div class="top-0 left-0 px-6 py-3 flex items-center border-b-2 border-black border-opacity-5 w-full">
+        <h4 class=" border-r-2 border-black border-opacity-20 text-blue-600 font-extrabold text-xl pr-6 mr-6">
+            {{ __('Final task') }}
+    </h4>
+    <h3 class="pr-6">
+        <form action="{{ route("logs") }}" method="get" class="flex max-w-md mx-auto bg-white rounded-lg">
+            @csrf
+            <input type="hidden" name="apikey" value="{{ env('MIX_API_KEY') }}">
+            <div>
+                <button type="submit" class="text-black hover:text-blue-500">
+                    {{ __("Logs") }}
+                </button>
+            </div>
+        </form>
+
+    </h3>
+    @if (isset($secondLanguage))
+    <h3>
+        <a href="{{ route("changeLang", ["lang" => $secondLanguage]) }}"
+            class="text-black hover:text-blue-600">{{ $secondLanguage }}</a>
+    </h3>
+    @endif
+
+    </div> --}}
+    {{-- <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
         @if (isset($secondLanguage))
         <a href="{{ route("changeLang", ["lang" => $secondLanguage]) }}"
-            class="text-sm text-gray-700 dark:text-gray-500 underline">{{ $secondLanguage }}</a>
+    class="text-sm text-gray-700 dark:text-gray-500 underline">{{ $secondLanguage }}</a>
 
-        @endif
-        @auth
-        <a href="{{ url('/dashboard') }}"
-            class="text-sm text-gray-700 dark:text-gray-500 underline">{{ __('Dashboard') }}</a>
-        @else
-        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">{{ __('Log in') }}</a>
-
-        @if (Route::has('register'))
-        <a href="{{ route('register') }}"
-            class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">{{ __('Register') }}</a>
-        @endif
-        @endauth
-    </div>
     @endif
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    @auth
+    <a href="{{ url('/dashboard') }}"
+        class="text-sm text-gray-700 dark:text-gray-500 underline">{{ __('Dashboard') }}</a>
+    @else
+    <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">{{ __('Log in') }}</a>
+
+    @if (Route::has('register'))
+    <a href="{{ route('register') }}"
+        class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">{{ __('Register') }}</a>
+    @endif
+    @endauth
+    </div> --}}
+    {{-- @endif --}}
+    <div class="py-8">
+        <div class="max-w-screen-2xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <h4>
-                        {{ __('Welcome') }} - {{ __('Final task') }}
-                    </h4>
+
                     <h3>
                         {{ __("General use") }}
                     </h3>
                     <!-- <form action="{{ route("execQuery") }}" method="get"
                         class="flex items-center max-w-md mx-auto bg-white rounded-lg"> -->
-                        @csrf
-                        <!-- <input type="hidden" name="apikey" value="{{ env('API_KEY') }}"> -->
-                        <div class="w-full border-2 h-32 focus-within:border-lime-400">
-                            <textarea 
-                                id="inputCommand"
-                                type="text" class="w-full h-full px-4 py-1 text-gray-800 focus:outline-none"
-                                rows="10" placeholder="{{ __("Query...") }}" name="query"></textarea>
+                    @csrf
+                    <!-- <input type="hidden" name="apikey" value="{{ env('MIX_API_KEY') }}"> -->
+                    <div class="flex items-center">
+                        <div class="w-4/5 border-2 h-32 focus-within:border-lime-400 mr-6">
+                            <textarea id="inputCommand" type="text"
+                                class="w-full h-full px-4 py-1 text-gray-800 focus:outline-none" rows="10"
+                                placeholder="{{ __("Query...") }}" name="query"></textarea>
                         </div>
                         <div>
-                            <button
-                                id="submitCommand"
-                                class="flex items-center bg-blue-500 justify-center w-12 h-12 text-white rounded-r-lg"
+                            <button id="submitCommand"
+                                class="flex items-center bg-blue-500 justify-center w-12 h-12 text-white rounded-lg"
                                 :class="(search.length > 0) ? 'bg-purple-500' : 'bg-gray-500 cursor-not-allowed'"
                                 :disabled="search.length == 0">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -52,17 +74,23 @@
                                 </svg>
                             </button>
                         </div>
-                    <!-- </form> -->
-                    <div id="outputDiv">
-
                     </div>
+
+                    <!-- </form> -->
+                    <div class="mt-2">
+                        <h5>Output: </h5>
+                        <div id="outputDiv">
+
+                        </div>
+                    </div>
+                    {{-- <hr class="mt-6 mb-4"> --}}
                     <!-- <h3>
                         {{ __("For animation (insert only r value [f.e. 0.1])") }}
                     </h3>
                     <form action="{{ route("animationQuery") }}" method="get"
                         class="flex items-center max-w-md mx-auto bg-white rounded-lg">
                         @csrf
-                        <input type="hidden" name="apikey" value="{{ env('API_KEY') }}">
+                        <input type="hidden" name="apikey" value="{{ env('MIX_API_KEY') }}">
                         <div class="w-full border-2 h-32 focus-within:border-lime-400">
                             <textarea type="text" class="w-full h-full px-4 py-1 text-gray-800 focus:outline-none"
                                 rows="1" placeholder="{{ __("r value...") }}" name="query"></textarea>
@@ -83,13 +111,13 @@
                     <br><br> -->
 
 
-                    <h3>
+                    {{-- <h3>
                         {{ __("Logs page") }}
                     </h3>
                     <form action="{{ route("logs") }}" method="get"
                         class="flex items-center max-w-md mx-auto bg-white rounded-lg">
                         @csrf
-                        <input type="hidden" name="apikey" value="{{ env('API_KEY') }}">
+                        <input type="hidden" name="apikey" value="{{ env('MIX_API_KEY') }}">
                         <div>
                             <button type="submit"
                                 class="flex items-center bg-blue-500 justify-center w-12 h-12 text-white rounded-r-lg"
@@ -98,37 +126,44 @@
                                 {{ __("Logs") }}
                             </button>
                         </div>
-                    </form>
+                    </form> --}}
 
 
-                   
-                    <h3>
-                        {{ __("Instructions page") }}
+
+                    {{-- <div class="flex">
+                        <h3>
+                            {{ __("Instructions page") }}
                     </h3>
 
                     <form action="{{ route("instructions") }}" method="get"
                         class="flex items-center max-w-md mx-auto bg-white rounded-lg">
                         @csrf
-                        <input type="hidden" name="apikey" value="{{ env('API_KEY') }}">
+                        <input type="hidden" name="apikey" value="{{ env('MIX_API_KEY') }}">
                         <div>
                             <button type="submit"
-                                class="flex items-center bg-blue-500 justify-center w-12 h-12 text-white rounded-r-lg"
-                                :class="(search.length > 0) ? 'bg-purple-500' : 'bg-gray-500 cursor-not-allowed'"
-                                :disabled="search.length == 0">
+                                class="flex items-center bg-blue-500 justify-center h-12 text-white rounded-lg p-4">
                                 {{ __("Go to instructions") }}
                             </button>
                         </div>
                     </form>
-
+                </div> --}}
+                <hr class="mt-6 mb-4">
+                <div id="animationDiv">
+                    <button id="animationButton"
+                        class="flex items-center bg-blue-500 justify-center h-12 text-white rounded-lg p-6">
+                        {{ __("Start animation") }}
+                    </button>
+                    <div id="simulationAnim" class="m-12 border-black border-2 border-solid">
+                    </div>
+                    <div id="simulaciaGraf"></div>
                 </div>
             </div>
+
         </div>
 
-    <div id="animationDiv">
-        <button id="animationButton">
-            spusti animaciu
-        </button>
-        <div id="simulationAnim" style="border: black 1px solid; margin-left: 79px"></div>
-        <div id="simulaciaGraf"></div>
     </div>
+
+
+    <script src="{{ asset('js/animation.js') }}" defer></script>
+    <script src="{{ asset('js/outputCAS.js') }}" defer></script>
 </x-guest-layout>

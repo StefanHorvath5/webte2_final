@@ -183,7 +183,7 @@ imageObj.onload = function () {
         anim.stop();
         data1 = [];
         data2 = [];
-        let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
+        let url = `/api/octaveAnimation?apikey=${process.env.MIX_API_KEY}`;
         // if (animI === 1) {
         //     url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&iteration='1'`;
         // }

@@ -31,9 +31,9 @@ Route::middleware('api.key')->group(function () {
 
     Route::post('/mail', [MailController::class, 'mailSend'])->name('mailSend');
     
-    Route::get('/instructions', function () { return view('instructions'); })->name('instructions');
+    // Route::get('/instructions', function () { return view('instructions'); })->name('instructions');
 
-    Route::get('/logs', function () { return view('logs'); })->name('logs');
+    // Route::get('/logs', function () { return view('logs'); })->name('logs');
 
 
 

@@ -1,5 +1,5 @@
 const mix = require("laravel-mix");
-
+require("dotenv").config();
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,8 +11,11 @@ const mix = require("laravel-mix");
  |
  */
 
-mix.js("resources/js/app.js", "public/js").postCss(
-    "resources/css/app.css",
-    "public/css",
-    [require("postcss-import"), require("tailwindcss"), require("autoprefixer")]
-);
+mix.js("resources/js/app.js", "public/js")
+    .js("resources/js/animation.js", "public/js")
+    .js("resources/js/outputCAS.js", "public/js")
+    .postCss("resources/css/app.css", "public/css", [
+        require("postcss-import"),
+        require("tailwindcss"),
+        require("autoprefixer"),
+    ]);
