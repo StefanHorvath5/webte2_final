@@ -902,7 +902,7 @@ var trace1 = {
     color: "rgba(253,96,178,1)",
     width: 3
   },
-  name: "Sinus"
+  name: "x0"
 };
 var trace2 = {
   x: [],
@@ -912,7 +912,7 @@ var trace2 = {
     color: "rgb(76,226,245,1)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x3"
 };
 var trace3 = {
   x: [],
@@ -922,7 +922,7 @@ var trace3 = {
     color: "rgb(76,169,250)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x2"
 };
 var trace4 = {
   x: [],
@@ -932,7 +932,7 @@ var trace4 = {
     color: "rgb(163,76,245)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x1"
 };
 var faketrace1 = {
   x: [],
@@ -942,7 +942,7 @@ var faketrace1 = {
     color: "rgba(253,96,178,1)",
     width: 3
   },
-  name: "Sinus"
+  name: "x0"
 };
 var faketrace2 = {
   x: [],
@@ -952,7 +952,7 @@ var faketrace2 = {
     color: "rgb(76,226,245,1)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x3"
 };
 var faketrace3 = {
   x: [],
@@ -962,7 +962,7 @@ var faketrace3 = {
     color: "rgb(76,169,250)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x2"
 };
 var faketrace4 = {
   x: [],
@@ -972,7 +972,7 @@ var faketrace4 = {
     color: "rgb(163,76,245)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x1"
 };
 var r = null;
 var data1 = [];
@@ -1187,8 +1187,11 @@ imageObj.onload = function () {
                 anim.stop();
               }
 
+              image.scaleX(1 - data2[0][i]["x1"] / 5);
+              rect1.x(image.width() * image.scaleX() - image.width());
+              image2.x(image.width() * image.scaleX() + 70);
               image2.scaleX(1 - data2[0][i]["x3"] / 5);
-              rect2.x(image2.width() * image2.scaleX() - image2.width());
+              rect2.x(image2.width() * image2.scaleX() - image2.width() + image.width() * image.scaleX() - image.width());
               i++;
             }, animlayer);
             anim.start();
