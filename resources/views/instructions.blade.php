@@ -2,8 +2,7 @@
 @include('layouts.customNavigation')
 @endif
 <!DOCTYPE html>
-<html lang="sk">
-
+<html lang="{{App::getLocale() == "en" ? "en" : "sk";}}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,80 +10,98 @@
     <title>Document</title>
 
     @if(!isset($download))
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&amp;display=swap"> -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @endif
 
 </head>
 
 <body>
+        <style> 
+        .instructions{ font-family:"DeJaVu Sans Mono",monospace; margin: auto;}
+        .endpoint {
+            margin-left: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            font-style: italic;
+        }
 
-    <!-- @if(!isset($download))
-        <div class="top-0 left-0 px-6 py-3 flex items-center border-b-2 border-black border-opacity-5 w-full">
-            <h4 class=" border-r-2 border-black border-opacity-20 text-blue-600 font-extrabold text-xl pr-6 mr-6">
-                <a href="http://localhost">
-                    Záverečné zadanie</a>
-            </h4>
-            <h3 class="pr-6">
-                <a href="{{ route("logs") }}" class="text-black hover:text-blue-500">
-                    Logy
-                </a>
-            </h3>
+        .descOfEndpoint {
+            font-size: 16px;
+            margin-left: 10px;
+        }
 
-            <h3 class="pr-6">
-                <a href="{{ route("instructions") }}" class="text-black hover:text-blue-500">
-                    Inštrukcie
-                </a>
-            </h3>
-            @if (isset($secondLanguage) && isset($currentLanguage))
-            <h3>
+        .post {
+            color: lightgreen;
+            background-color: rgba(0, 0, 0, 0.685);
+        }
 
-                <a href="{{ route("changeLang", ["lang" => $currentLanguage]) }}"
-                    class="text-black hover:text-blue-600 underline text-opacity-50 mr-1">{{ $currentLanguage }}</a>
-                /
-                <a href="{{ route("changeLang", ["lang" => $secondLanguage]) }}"
-                    class="ml-1 text-black hover:text-blue-600">{{ $secondLanguage }}</a>
-            </h3>
-            @endif
-            
-        </div>
-        @endif -->
+        .get {
+            color: plum; 
+            background-color: rgba(0, 0, 0, 0.685);
+        }
 
-        <style> .instructions{ font-family:"DeJaVu Sans Mono",monospace; }</style>
+        .post, .get {
+            padding: 3px;
+            border-radius: 5px;
+        }
+
+        ul {
+            width: 100%;
+            list-style-type: none;
+        }
+
+        li {
+            margin: 5px;
+        }
+
+        </style>
 
 
     <div class="instructions" style="width: 75%;padding: 8px;">
-        <h2 style="font-size: 24;">Inštrukcie</h2>
-        <p>Stránka umožňuje pracovať s Octave programom. Je možné zadať do textového poľa <b>Všeobecné používanie</b> vstup, ktorý by ste normálne zadali do Octave. To vám vráti výstup programu.</p>
+        <h2 style="font-size: 24;">{{ __("Instructions") }}</h2>
+        <p>{{ __("The webpage allows the users to work with Octave. Inputting Octave commands into the") }} <b>{{ __("General use") }}</b> {{ __("textbox, allows the user to run standard Octave commands, returning the program's output") }}.</p>
         <br>
-        <p>Ďalej kliknutím na tlačítko <b>Spustiť animáciu</b> sa spustí preddefinovaný Octave príklad a jeho výstup sa zobrazí nižšie ako animácia. Pod animáciou je aj graf výstupu.</p>
+        <p>{{ __("Clicking on") }} <b>{{ __("Start animation") }}</b> {{ __("starts a predefined Octave program, and its' output is shown as an animation. The output is also graphed below") }}.</p>
         <br>
-        <p>Na podstránke logy je možné si stiahnuť logy vo formáte CSV, poprípade ich poslať na preddefinovaný email. Alebo je možné si ich pozrieť priamo na stránke.</p>
+        <p>{{ __("On the Logs page the user can view program logs, download them in CSV format, or send them via e-mail") }}.</p>
         <br>
-        <h4 style="font-size: 16px; font-weight: bold;">Pre developerov tu sú endpointy nášho Octave API:</h4>
+        <h4 style="font-size: 16px; font-weight: bold;">{{ __("The following endpoints of our Octave API are available for developers") }}:</h4>
         <ul>
-            <li>/octave -> vykoná zadaný príkaz v octave a vráti výstupné dáta</li>
-            <li>/octaveanimation -> vykoná preddefinovaný príkaz pre animáciu a vráti x,y,t</li>
-            <li>/csv -> stiahnutie logov v CSV formáte</li>
-            <li>/mail -> pošle mail s logmi na nakonfigurovaný email</li>
+            <li>
+                <span class="post">POST:</span>&nbsp;
+                <span class="endpoint">/octave</span>
+                <span class="descOfEndpoint">-> {{ __("executes an Octave command returning its' output") }}</span>
+            </li>
+            <hr>
+            <li>
+                <span class="get">GET: </span>&nbsp;
+                <span class="endpoint">/octaveanimation</span>
+                <span class="descOfEndpoint">-> {{ __("runs the predefined Octave animation program, returning the x,y,t values") }}</span>
+            </li>
+            <hr>
+            <li>
+                <span class="get">GET: </span>&nbsp; 
+                <span class="endpoint">/csv</span>
+                <span class="descOfEndpoint">-> {{ __("downloads the logs in CSV format") }}</span>
+            </li>
+            <hr>
+            <li>
+                <span class="post">POST:</span>&nbsp;
+                <span class="endpoint">/mail</span>
+                <span class="descOfEndpoint">-> {{ __("sends the logs to a preconfigured e-mail adress.") }}</span>
+            </li>
         </ul>
     </div>
-
+    
+    
     @if(!isset($download))
-    <form action="{{ route("downloadPDF") }}" method="get" class="flex items-center max-w-md mx-auto bg-white rounded-lg">
+    <form action="{{ route("downloadPDF") }}" method="get" class="flex items-center max-w-fit mx-auto bg-white rounded-lg">
         @csrf
-        <div>
         <button type="submit" class="flex items-center bg-blue-500 justify-center h-12 text-white rounded-lg p-6">
-                {{ __("Download PDF") }}
-            </button>
-
-            <!-- <button type="submit" class="flex items-center bg-blue-500 justify-center h-12 text-white rounded-lg p-6">
-                        {{ __("Send mail") }}
-                    </button> -->
-        </div>
+            {{ __("Download PDF") }}
+        </button>
     </form>
     @endif
-
 
 
 </body>

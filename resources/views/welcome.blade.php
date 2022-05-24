@@ -78,7 +78,7 @@
 
                     <!-- </form> -->
                     <div class="mt-2">
-                        <h5>Output: </h5>
+                        <h5>{{ __("Output") }}: </h5>
                         <div id="outputDiv">
 
                         </div>

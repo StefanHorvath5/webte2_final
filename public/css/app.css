@@ -752,6 +752,9 @@ select {
 .h-12 {
   height: 3rem;
 }
+.h-screen {
+  height: 100vh;
+}
 .h-32 {
   height: 8rem;
 }
@@ -785,11 +788,11 @@ select {
 .w-full {
   width: 100%;
 }
-.w-12 {
-  width: 3rem;
-}
 .w-4\/5 {
   width: 80%;
+}
+.w-12 {
+  width: 3rem;
 }
 .w-24 {
   width: 6rem;
@@ -826,6 +829,11 @@ select {
 }
 .max-w-7xl {
   max-width: 80rem;
+}
+.max-w-fit {
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
 }
 .flex-1 {
   flex: 1 1 0%;

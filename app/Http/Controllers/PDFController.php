@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -13,8 +14,6 @@ class PDFController extends Controller {
             'download' => "true"
         ]);
 
-        
-        // return PDF::loadView('instructions')->download('instructions.pdf');
         return $pdf->download('instructions.pdf');
     }
 

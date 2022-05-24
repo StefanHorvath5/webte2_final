@@ -8,6 +8,7 @@
     "Password": "Heslo",
     "Remember me": "Zapamätať si ma",
     "Name": "Meno",
+    "Output": "Výstup",
     "Confirm Password": "Potvrdiť heslo",
     "Already registered?": "Už máš účet?",
     "Reset Password": "Resetovať heslo",
@@ -33,5 +34,15 @@
     "Logs": "Logy",
     "Start animation": "Spustiť animáciu",
     "Animation": "Animácia",
-    "Graph": "Graf"
+    "Graph": "Graf",
+    "The webpage allows the users to work with Octave. Inputting Octave commands into the": "Stránka umožňuje pracovať s Octave programom. Je možné zadať do textového poľa",
+    "textbox, allows the user to run standard Octave commands, returning the program's output": "vstup, ktorý by ste normálne zadali do Octave. To vám vráti výstup programu",
+    "Clicking on": "Ďalej kliknutím na tlačítko",
+    "starts a predefined Octave program, and its' output is shown as an animation. The output is also graphed below": "sa spustí preddefinovaný Octave príklad a jeho výstup sa zobrazí nižšie ako animácia. Pod animáciou je aj graf výstupu",
+    "On the Logs page the user can view program logs, download them in CSV format, or send them via e-mail": "Na podstránke logy je možné si stiahnuť logy vo formáte CSV, poprípade ich poslať na preddefinovaný email. Alebo je možné si ich pozrieť priamo na stránke",
+    "executes an Octave command returning its' output": "vykoná zadaný príkaz v octave a vráti výstupné dáta",
+    "runs the predefined Octave animation program, returning the x,y,t values": "vykoná preddefinovaný príkaz pre animáciu a vráti x,y,t",
+    "downloads the logs in CSV format": "stiahnutie logov v CSV formáte",
+    "sends the logs to a preconfigured e-mail adress": "pošle mail s logmi na nakonfigurovaný email",
+    "The following endpoints of our Octave API are available for developers:": "Pre developerov tu sú endpointy nášho Octave API"
 }
