@@ -860,8 +860,24 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var animationDiv = document.querySelector("#animationDiv");
-var graf = document.querySelector("#simulaciaGraf"); // let r = null;
+// const animationDiv = document.querySelector("#animationDiv");
+// let graf = document.querySelector("#simulaciaGraf");
+var simulationAnim = document.querySelector("#simulationAnim");
+var graphContainer = document.querySelector("#graphContainer");
+var graf = document.querySelector("#simulaciaGraf");
+var animationCheckbox = document.querySelector("#animationCheckbox");
+var graphCheckbox = document.querySelector("#graphCheckbox");
+animationCheckbox.addEventListener("input", function () {
+  simulationAnim.style.display = animationCheckbox.checked ? "block" : "none";
+});
+graphCheckbox.addEventListener("input", function () {
+  graphContainer.style.display = graphCheckbox.checked ? "block" : "none";
+});
+
+window.onload = function () {
+  animationCheckbox.checked = true;
+  graphCheckbox.checked = true;
+}; // let r = null;
 // setInterval(async () => {
 //     let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
 //     if (r !== null) {
@@ -876,6 +892,7 @@ var graf = document.querySelector("#simulaciaGraf"); // let r = null;
 //     animationDiv.innerHTML = "r: " + respJSON.r;
 //     r = respJSON.r;
 // }, 1000);
+
 
 var trace1 = {
   x: [],
@@ -1018,10 +1035,10 @@ var draw = function draw() {
   //     {x: trace2.x, y: trace2.y}
   // ]
   // Plotly.restyle(graf, update, graph);
+  // graf = document.querySelector("#simulaciaGraf");
 
-  graf = document.querySelector("#simulaciaGraf");
   myInterval = setInterval(function () {
-    console.log("hi", count);
+    // console.log("hi", count);
     Plotly.extendTraces(graf, {
       y: [[trace1.y[count]], [trace2.y[count]], [trace3.y[count]], [trace4.y[count]]],
       x: [[count], [count], [count], [count]] // y: [[data1[0][count]["x0"]], [data2[0][count]["x3"]], [data2[0][count]["x0"]], [data2[0][count]["x1"]]],
@@ -1119,7 +1136,7 @@ imageObj.onload = function () {
   var anim = new Konva.Animation(function (frame) {});
   var animI = 0;
   animationButton.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-    var url, request, respData, respJSON, i;
+    var rValue, rInput, url, request, respData, respJSON, i;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -1141,22 +1158,24 @@ imageObj.onload = function () {
             anim.stop();
             data1 = [];
             data2 = [];
-            url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa"; // if (animI === 1) {
+            rValue = document.querySelector("#rValue");
+            rInput = rValue.value === null || isNaN(rValue.value) || rValue.value > 0.2 || rValue.value < -0.2 ? 0.1 : rValue.value;
+            url = "".concat("http://localhost", "/api/octaveAnimation?apikey=").concat("aaaaaaaaaaaaaaaaaaaaaa", "&rValue=").concat(rInput); // if (animI === 1) {
             //     url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&iteration='1'`;
             // }
 
             request = new Request(url, {
               method: "GET"
             });
-            _context.next = 19;
+            _context.next = 21;
             return fetch(request);
 
-          case 19:
+          case 21:
             respData = _context.sent;
-            _context.next = 22;
+            _context.next = 24;
             return respData.json();
 
-          case 22:
+          case 24:
             respJSON = _context.sent;
             data1.push(respJSON.data.y);
             data2.push(respJSON.data.x);
@@ -1181,7 +1200,7 @@ imageObj.onload = function () {
             });
             animI = animI === 0 ? 1 : 0;
 
-          case 32:
+          case 34:
           case "end":
             return _context.stop();
         }
@@ -1216,7 +1235,7 @@ imageObj.onload = function () {
   // }, 5000);
 };
 
-imageObj.src = "/storage/images/spring.png";
+imageObj.src = "".concat("http://localhost", "/storage/images/spring.png");
 })();
 
 /******/ })()

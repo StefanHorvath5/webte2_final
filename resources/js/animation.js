@@ -1,6 +1,23 @@
-const animationDiv = document.querySelector("#animationDiv");
-let graf = document.querySelector("#simulaciaGraf");
+// const animationDiv = document.querySelector("#animationDiv");
+// let graf = document.querySelector("#simulaciaGraf");
 
+const simulationAnim = document.querySelector("#simulationAnim");
+const graphContainer = document.querySelector("#graphContainer");
+const graf = document.querySelector("#simulaciaGraf");
+
+const animationCheckbox = document.querySelector("#animationCheckbox");
+const graphCheckbox = document.querySelector("#graphCheckbox");
+
+animationCheckbox.addEventListener("input", () => {
+    simulationAnim.style.display = animationCheckbox.checked ? "block" : "none";
+});
+graphCheckbox.addEventListener("input", () => {
+    graphContainer.style.display = graphCheckbox.checked ? "block" : "none";
+});
+window.onload = () => {
+    animationCheckbox.checked = true;
+    graphCheckbox.checked = true;
+};
 // let r = null;
 // setInterval(async () => {
 //     let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
@@ -130,11 +147,10 @@ let data2 = [];
 //     draw();
 // }, 5000);
 
-
-let cnt = 0
-let count = 0
-let myInterval
-let graph
+let cnt = 0;
+let count = 0;
+let myInterval;
+let graph;
 
 const draw = () => {
     // let graph = [trace1, trace2, trace3, trace4];
@@ -158,10 +174,9 @@ const draw = () => {
     }
     console.log(trace1);
 
-    graph = []
+    graph = [];
     // graph = [trace1, trace2, trace3, trace4];
     // Plotly.newPlot(graf, graph, { responsive: false });
-
 
     // let update = {
     //     'marker': {
@@ -176,17 +191,25 @@ const draw = () => {
 
     // Plotly.restyle(graf, update, graph);
 
-    graf = document.querySelector("#simulaciaGraf");
+    // graf = document.querySelector("#simulaciaGraf");
 
-    
     myInterval = setInterval(() => {
-        console.log("hi",count)
-        Plotly.extendTraces(graf, {
-            y: [[trace1.y[count]], [trace2.y[count]], [trace3.y[count]], [trace4.y[count]]],
-            x: [[count], [count], [count], [count]],
-            // y: [[data1[0][count]["x0"]], [data2[0][count]["x3"]], [data2[0][count]["x0"]], [data2[0][count]["x1"]]],
-            // x: [[count], [count], [count], [count]],
-        }, [0, 1, 2, 3])
+        // console.log("hi", count);
+        Plotly.extendTraces(
+            graf,
+            {
+                y: [
+                    [trace1.y[count]],
+                    [trace2.y[count]],
+                    [trace3.y[count]],
+                    [trace4.y[count]],
+                ],
+                x: [[count], [count], [count], [count]],
+                // y: [[data1[0][count]["x0"]], [data2[0][count]["x3"]], [data2[0][count]["x0"]], [data2[0][count]["x1"]]],
+                // x: [[count], [count], [count], [count]],
+            },
+            [0, 1, 2, 3]
+        );
         cnt++;
         count++;
         // if(cnt > 500) {
@@ -196,10 +219,8 @@ const draw = () => {
         //         }
         //     })
         // }
-        if(cnt > 500) clearInterval(myInterval)
-    }, 10)
-
-
+        if (cnt > 500) clearInterval(myInterval);
+    }, 10);
 
     // var cnt = 0;
 
@@ -212,8 +233,7 @@ const draw = () => {
 
     // if(++cnt === 100) clearInterval(interval);
     // }, 300);
-
-}
+};
 
 let font = "Arial";
 let fontsize = 20;
@@ -289,30 +309,37 @@ imageObj.onload = function () {
     let anim = new Konva.Animation(function (frame) {});
     let animI = 0;
     animationButton.addEventListener("click", async () => {
+        cnt = 0;
+        count = 0;
+        clearInterval(myInterval);
 
-        cnt = 0
-        count = 0
-        clearInterval(myInterval)
-        
         // graf = document.querySelector("#simulaciaGraf");
-        
-        graph = []
 
-        faketrace1.x = []
-        faketrace1.y = []
-        faketrace2.x = []
-        faketrace2.y = []
-        faketrace3.x = []
-        faketrace3.y = []
-        faketrace4.x = []
-        faketrace4.y = []
+        graph = [];
+
+        faketrace1.x = [];
+        faketrace1.y = [];
+        faketrace2.x = [];
+        faketrace2.y = [];
+        faketrace3.x = [];
+        faketrace3.y = [];
+        faketrace4.x = [];
+        faketrace4.y = [];
 
         // Plotly.deleteTraces(graf, [0,1,2,3]);
 
         anim.stop();
         data1 = [];
         data2 = [];
-        let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
+        let rValue = document.querySelector("#rValue");
+        let rInput =
+            rValue.value === null ||
+            isNaN(rValue.value) ||
+            rValue.value > 0.2 ||
+            rValue.value < -0.2
+                ? 0.1
+                : rValue.value;
+        let url = `${process.env.MIX_APP_URL}/api/octaveAnimation?apikey=${process.env.MIX_API_KEY}&rValue=${rInput}`;
         // if (animI === 1) {
         //     url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&iteration='1'`;
         // }
@@ -331,12 +358,16 @@ imageObj.onload = function () {
                 anim.stop();
             }
             image2.scaleX(1 - data2[0][i]["x3"] / 5);
-            rect2.x( image2.width()*image2.scaleX() - image2.width() );
+            rect2.x(image2.width() * image2.scaleX() - image2.width());
             i++;
         }, animlayer);
         anim.start();
         draw();
-        document.querySelector("#simulaciaGraf").scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+        document.querySelector("#simulaciaGraf").scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "nearest",
+        });
         animI = animI === 0 ? 1 : 0;
     });
     // setInterval(async () => {
@@ -368,4 +399,4 @@ imageObj.onload = function () {
     //     draw();
     // }, 5000);
 };
-imageObj.src = "/storage/images/spring.png";
+imageObj.src = `${process.env.MIX_APP_URL}/storage/images/spring.png`;

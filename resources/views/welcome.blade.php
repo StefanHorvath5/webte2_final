@@ -149,13 +149,35 @@
                 </div> --}}
                 <hr class="mt-6 mb-4">
                 <div id="animationDiv">
-                    <button id="animationButton"
-                        class="flex items-center bg-blue-500 justify-center h-12 text-white rounded-lg p-6">
-                        {{ __("Start animation") }}
-                    </button>
-                    <div id="simulationAnim" class="m-12 border-black border-2 border-solid">
+                    <div class="flex">
+                        <div class="mr-5">
+                            <label for="rValue h-10 pr-2">
+                                R:
+                            </label>
+                            <input type="number" value="0.1" max="0.2" min="-0.2" id="rValue"
+                                class="w-24 h-10 rounded-lg" step="0.01">
+                        </div>
+                        <button id="animationButton"
+                            class="flex items-center bg-blue-500 justify-center h-10 text-white rounded-lg px-6 py-2">
+                            {{ __("Start animation") }}
+                        </button>
                     </div>
-                    <div id="simulaciaGraf"></div>
+                    <div class="flex mt-3">
+                        <div class="mr-3">
+                            <label for="animationCheckbox">{{ __("Animation") }}</label>
+                            <input type="checkbox" name="animationCheckbox" id="animationCheckbox">
+                        </div>
+                        <div>
+
+                            <label for="animationCheckbox">{{ __("Graph") }}</label>
+                            <input type="checkbox" name="graphCheckbox" id="graphCheckbox">
+                        </div>
+                    </div>
+                    <div id="simulationAnim" class="mx-12 my-6 border-black border-2 border-solid">
+                    </div>
+                    <div id="graphContainer">
+                        <div id="simulaciaGraf"></div>
+                    </div>
                 </div>
             </div>
 
