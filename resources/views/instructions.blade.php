@@ -1,23 +1,23 @@
 @if(!isset($download))
-@include('layouts.customNavigation')
+    @include('layouts.customNavigation')
 @endif
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
 
-    @if(!isset($download))
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&amp;display=swap">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    @endif
+        @if(!isset($download))
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&amp;display=swap">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        @endif
 
-</head>
+    </head>
 
-<body>
+    <body>
 
     <!-- @if(!isset($download))
         <div class="top-0 left-0 px-6 py-3 flex items-center border-b-2 border-black border-opacity-5 w-full">
@@ -51,36 +51,33 @@
         @endif -->
 
 
-    <div style="width: 75%;padding: 8px;">
-        <h2 style="font-size: 24;">Inštrukcie</h2>
-        <p>Stránka umožňuje pracovať s Octave programom. Je možné zadať do textového poľa <b>Všeobecné používanie</b> vstup, ktorý by ste normálne zadali do Octave. To vám vráti výstup programu.</p>
-        <br>
-        <p>Ďalej kliknutím na tlačítko <b>Spustiť animáciu</b> sa spustí preddefinovaný Octave príklad a jeho výstup sa zobrazí nižšie ako animácia. Pod animáciou je aj graf výstupu.</p>
-        <br>
-        <p>Na podstránke logy je možné si stiahnuť logy vo formáte CSV, poprípade ich poslať na preddefinovaný email. Alebo je možné si ich pozrieť priamo na stránke.</p>
-        <br>
-        <h4 style="font-size: 16px; font-weight: bold;">Pre developerov tu sú endpointy nášho Octave API:</h4>
-        <ul>
-            <li>/octave -> vykoná zadaný príkaz v octave a vráti výstupné dáta</li>
-            <li>/octaveanimation -> vykoná preddefinovaný príkaz pre animáciu a vráti x,y,t</li>
-            <li>/csv -> stiahnutie logov v CSV formáte</li>
-            <li>/mail -> pošle mail s logmi na nakonfigurovaný email</li>
-        </ul>
-    </div>
-
-    @if(!isset($download))
-    <form action="{{ route("downloadPDF") }}" method="get" class="flex items-center max-w-md mx-auto bg-white rounded-lg">
-        @csrf
         <div>
-            <button type="submit" class="flex items-center bg-blue-500 justify-center w-12 h-12 text-white rounded-r-lg" :class="(search.length > 0) ? 'bg-purple-500' : 'bg-gray-500 cursor-not-allowed'" :disabled="search.length == 0">
-                {{ __("Download PDF") }}
-            </button>
+            <h4>API enpoints:</h4>
+            <ul>
+                <li>/octave -> vykoná zadaný príkaz v octave a vráti response</li>
+                <li>/octaveAnimation -> vykoná preddefinovaný príkaz pre animáciu a vráti x,y,t ...</li>
+                <li>/CSV -> stiahne CSV logov</li>
+                <li>/mail -> pošle mail</li>
+            </ul>
         </div>
-    </form>
-    @endif
+
+        @if(!isset($download))
+        <form action="{{ route("downloadPDF") }}" method="get"
+            class="flex items-center max-w-md mx-auto bg-white rounded-lg">
+            @csrf
+            <div>
+                <button type="submit"
+                    class="flex items-center bg-blue-500 justify-center w-12 h-12 text-white rounded-r-lg"
+                    :class="(search.length > 0) ? 'bg-purple-500' : 'bg-gray-500 cursor-not-allowed'"
+                    :disabled="search.length == 0">
+                    {{ __("Download PDF") }}
+                </button>
+            </div>
+        </form>
+        @endif
 
 
 
-</body>
+    </body>
 
 </html>
