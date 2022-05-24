@@ -2,7 +2,7 @@
 @include('layouts.customNavigation')
 @endif
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,7 @@
     <title>Document</title>
 
     @if(!isset($download))
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&amp;display=swap">
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&amp;display=swap"> -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @endif
 
@@ -50,8 +50,10 @@
         </div>
         @endif -->
 
+        <style> .instructions{ font-family:"DeJaVu Sans Mono",monospace; }</style>
 
-    <div style="width: 75%;padding: 8px;">
+
+    <div class="instructions" style="width: 75%;padding: 8px;">
         <h2 style="font-size: 24;">Inštrukcie</h2>
         <p>Stránka umožňuje pracovať s Octave programom. Je možné zadať do textového poľa <b>Všeobecné používanie</b> vstup, ktorý by ste normálne zadali do Octave. To vám vráti výstup programu.</p>
         <br>
@@ -72,9 +74,13 @@
     <form action="{{ route("downloadPDF") }}" method="get" class="flex items-center max-w-md mx-auto bg-white rounded-lg">
         @csrf
         <div>
-            <button type="submit" class="flex items-center bg-blue-500 justify-center w-12 h-12 text-white rounded-r-lg" :class="(search.length > 0) ? 'bg-purple-500' : 'bg-gray-500 cursor-not-allowed'" :disabled="search.length == 0">
+        <button type="submit" class="flex items-center bg-blue-500 justify-center h-12 text-white rounded-lg p-6">
                 {{ __("Download PDF") }}
             </button>
+
+            <!-- <button type="submit" class="flex items-center bg-blue-500 justify-center h-12 text-white rounded-lg p-6">
+                        {{ __("Send mail") }}
+                    </button> -->
         </div>
     </form>
     @endif
