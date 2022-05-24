@@ -62,6 +62,50 @@ let trace4 = {
     name: "Cosinus",
 };
 
+let faketrace1 = {
+    x: [],
+    y: [],
+    type: "scatter",
+    line: {
+        color: "rgba(253,96,178,1)",
+        width: 3,
+    },
+    name: "Sinus",
+};
+
+let faketrace2 = {
+    x: [],
+    y: [],
+    type: "scatter",
+    line: {
+        color: "rgb(76,226,245,1)",
+        width: 3,
+    },
+    name: "Cosinus",
+};
+
+let faketrace3 = {
+    x: [],
+    y: [],
+    type: "scatter",
+    line: {
+        color: "rgb(76,169,250)",
+        width: 3,
+    },
+    name: "Cosinus",
+};
+
+let faketrace4 = {
+    x: [],
+    y: [],
+    type: "scatter",
+    line: {
+        color: "rgb(163,76,245)",
+        width: 3,
+    },
+    name: "Cosinus",
+};
+
 let r = null;
 
 let data1 = [];
@@ -86,9 +130,17 @@ let data2 = [];
 //     draw();
 // }, 5000);
 
+
+let cnt = 0
+let count = 0
+let myInterval
+let graph
+
 const draw = () => {
     // let graph = [trace1, trace2, trace3, trace4];
-    // Plotly.newPlot(graf, graph, { responsive: false });
+    // graf.innerHTML = ""
+    graph = [faketrace1, faketrace2, faketrace3, faketrace4];
+    Plotly.newPlot(graf, graph, { responsive: false });
 
     for (let i = 0; i < data1[0].length; i++) {
         trace1.y.push(data1[0][i]["x0"]);
@@ -105,8 +157,49 @@ const draw = () => {
         trace4.x.push(i);
     }
     console.log(trace1);
-    let graph = [trace1, trace2, trace3, trace4];
-    Plotly.newPlot(graf, graph, { responsive: false });
+
+    graph = []
+    // graph = [trace1, trace2, trace3, trace4];
+    // Plotly.newPlot(graf, graph, { responsive: false });
+
+
+    // let update = {
+    //     'marker': {
+    //         color: "red",
+    //         size: 16
+    //     }
+    // }
+
+    // let d = [
+    //     {x: trace2.x, y: trace2.y}
+    // ]
+
+    // Plotly.restyle(graf, update, graph);
+
+    graf = document.querySelector("#simulaciaGraf");
+
+    
+    myInterval = setInterval(() => {
+        console.log("hi",count)
+        Plotly.extendTraces(graf, {
+            y: [[trace1.y[count]], [trace2.y[count]], [trace3.y[count]], [trace4.y[count]]],
+            x: [[count], [count], [count], [count]],
+            // y: [[data1[0][count]["x0"]], [data2[0][count]["x3"]], [data2[0][count]["x0"]], [data2[0][count]["x1"]]],
+            // x: [[count], [count], [count], [count]],
+        }, [0, 1, 2, 3])
+        cnt++;
+        count++;
+        // if(cnt > 500) {
+        //     Plotly.relayout(graf, {
+        //         xaxis: {
+        //             range: [cnt-500,cnt]
+        //         }
+        //     })
+        // }
+        if(cnt > 500) clearInterval(myInterval)
+    }, 10)
+
+
 
     // var cnt = 0;
 
@@ -196,9 +289,26 @@ imageObj.onload = function () {
     let anim = new Konva.Animation(function (frame) {});
     let animI = 0;
     animationButton.addEventListener("click", async () => {
+
+        cnt = 0
+        count = 0
+        clearInterval(myInterval)
         
+        // graf = document.querySelector("#simulaciaGraf");
         
-                
+        graph = []
+
+        faketrace1.x = []
+        faketrace1.y = []
+        faketrace2.x = []
+        faketrace2.y = []
+        faketrace3.x = []
+        faketrace3.y = []
+        faketrace4.x = []
+        faketrace4.y = []
+
+        // Plotly.deleteTraces(graf, [0,1,2,3]);
+
         anim.stop();
         data1 = [];
         data2 = [];

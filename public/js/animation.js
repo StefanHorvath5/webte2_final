@@ -917,6 +917,46 @@ var trace4 = {
   },
   name: "Cosinus"
 };
+var faketrace1 = {
+  x: [],
+  y: [],
+  type: "scatter",
+  line: {
+    color: "rgba(253,96,178,1)",
+    width: 3
+  },
+  name: "Sinus"
+};
+var faketrace2 = {
+  x: [],
+  y: [],
+  type: "scatter",
+  line: {
+    color: "rgb(76,226,245,1)",
+    width: 3
+  },
+  name: "Cosinus"
+};
+var faketrace3 = {
+  x: [],
+  y: [],
+  type: "scatter",
+  line: {
+    color: "rgb(76,169,250)",
+    width: 3
+  },
+  name: "Cosinus"
+};
+var faketrace4 = {
+  x: [],
+  y: [],
+  type: "scatter",
+  line: {
+    color: "rgb(163,76,245)",
+    width: 3
+  },
+  name: "Cosinus"
+};
 var r = null;
 var data1 = [];
 var data2 = []; // setInterval(async () => {
@@ -938,9 +978,19 @@ var data2 = []; // setInterval(async () => {
 //     draw();
 // }, 5000);
 
+var cnt = 0;
+var count = 0;
+var myInterval;
+var graph;
+
 var draw = function draw() {
   // let graph = [trace1, trace2, trace3, trace4];
-  // Plotly.newPlot(graf, graph, { responsive: false });
+  // graf.innerHTML = ""
+  graph = [faketrace1, faketrace2, faketrace3, faketrace4];
+  Plotly.newPlot(graf, graph, {
+    responsive: false
+  });
+
   for (var i = 0; i < data1[0].length; i++) {
     trace1.y.push(data1[0][i]["x0"]);
     trace1.x.push(i);
@@ -956,10 +1006,39 @@ var draw = function draw() {
   }
 
   console.log(trace1);
-  var graph = [trace1, trace2, trace3, trace4];
-  Plotly.newPlot(graf, graph, {
-    responsive: false
-  }); // var cnt = 0;
+  graph = []; // graph = [trace1, trace2, trace3, trace4];
+  // Plotly.newPlot(graf, graph, { responsive: false });
+  // let update = {
+  //     'marker': {
+  //         color: "red",
+  //         size: 16
+  //     }
+  // }
+  // let d = [
+  //     {x: trace2.x, y: trace2.y}
+  // ]
+  // Plotly.restyle(graf, update, graph);
+
+  graf = document.querySelector("#simulaciaGraf");
+  myInterval = setInterval(function () {
+    console.log("hi", count);
+    Plotly.extendTraces(graf, {
+      y: [[trace1.y[count]], [trace2.y[count]], [trace3.y[count]], [trace4.y[count]]],
+      x: [[count], [count], [count], [count]] // y: [[data1[0][count]["x0"]], [data2[0][count]["x3"]], [data2[0][count]["x0"]], [data2[0][count]["x1"]]],
+      // x: [[count], [count], [count], [count]],
+
+    }, [0, 1, 2, 3]);
+    cnt++;
+    count++; // if(cnt > 500) {
+    //     Plotly.relayout(graf, {
+    //         xaxis: {
+    //             range: [cnt-500,cnt]
+    //         }
+    //     })
+    // }
+
+    if (cnt > 500) clearInterval(myInterval);
+  }, 10); // var cnt = 0;
   // var interval = setInterval(function() {
   // Plotly.extendTraces(graf, {
   //     x: [trace1.x, trace2.x, trace3.x, trace4.x],
@@ -1045,6 +1124,20 @@ imageObj.onload = function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+            cnt = 0;
+            count = 0;
+            clearInterval(myInterval); // graf = document.querySelector("#simulaciaGraf");
+
+            graph = [];
+            faketrace1.x = [];
+            faketrace1.y = [];
+            faketrace2.x = [];
+            faketrace2.y = [];
+            faketrace3.x = [];
+            faketrace3.y = [];
+            faketrace4.x = [];
+            faketrace4.y = []; // Plotly.deleteTraces(graf, [0,1,2,3]);
+
             anim.stop();
             data1 = [];
             data2 = [];
@@ -1055,15 +1148,15 @@ imageObj.onload = function () {
             request = new Request(url, {
               method: "GET"
             });
-            _context.next = 7;
+            _context.next = 19;
             return fetch(request);
 
-          case 7:
+          case 19:
             respData = _context.sent;
-            _context.next = 10;
+            _context.next = 22;
             return respData.json();
 
-          case 10:
+          case 22:
             respJSON = _context.sent;
             data1.push(respJSON.data.y);
             data2.push(respJSON.data.x);
@@ -1088,7 +1181,7 @@ imageObj.onload = function () {
             });
             animI = animI === 0 ? 1 : 0;
 
-          case 20:
+          case 32:
           case "end":
             return _context.stop();
         }
