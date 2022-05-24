@@ -155,6 +155,17 @@ let graph;
 const draw = () => {
     // let graph = [trace1, trace2, trace3, trace4];
     // graf.innerHTML = ""
+
+    trace1.x = []
+    trace1.y = []
+    trace2.x = []
+    trace2.y = []
+    trace3.x = []
+    trace3.y = []
+    trace4.x = []
+    trace4.y = []
+
+
     graph = [faketrace1, faketrace2, faketrace3, faketrace4];
     Plotly.newPlot(graf, graph, { responsive: false });
 
