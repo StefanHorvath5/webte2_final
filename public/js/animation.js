@@ -860,8 +860,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-// const animationDiv = document.querySelector("#animationDiv");
-// let graf = document.querySelector("#simulaciaGraf");
 var simulationAnim = document.querySelector("#simulationAnim");
 var graphContainer = document.querySelector("#graphContainer");
 var graf = document.querySelector("#simulaciaGraf");
@@ -877,22 +875,7 @@ graphCheckbox.addEventListener("input", function () {
 window.onload = function () {
   animationCheckbox.checked = true;
   graphCheckbox.checked = true;
-}; // let r = null;
-// setInterval(async () => {
-//     let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
-//     if (r !== null) {
-//         url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&query=${r}`;
-//     }
-//     const request = new Request(url, {
-//         method: "GET",
-//     });
-//     const respData = await fetch(request);
-//     const respJSON = await respData.json();
-//     console.log(respJSON);
-//     animationDiv.innerHTML = "r: " + respJSON.r;
-//     r = respJSON.r;
-// }, 1000);
-
+};
 
 var trace1 = {
   x: [],
@@ -976,33 +959,13 @@ var faketrace4 = {
 };
 var r = null;
 var data1 = [];
-var data2 = []; // setInterval(async () => {
-//     data1 = [];
-//     data2 = [];
-//     let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
-//     if (r !== null) {
-//         url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&query=${r}`;
-//     }
-//     const request = new Request(url, {
-//         method: "GET",
-//     });
-//     const respData = await fetch(request);
-//     const respJSON = await respData.json();
-//     data1.push(respJSON.data.y);
-//     data2.push(respJSON.data.x);
-//     // console.log("data1 ");
-//     // console.log("data2 ");
-//     draw();
-// }, 5000);
-
+var data2 = [];
 var cnt = 0;
 var count = 0;
 var myInterval;
 var graph;
 
 var draw = function draw() {
-  // let graph = [trace1, trace2, trace3, trace4];
-  // graf.innerHTML = ""
   trace1.x = [];
   trace1.y = [];
   trace2.x = [];
@@ -1030,54 +993,22 @@ var draw = function draw() {
     trace4.x.push(_i);
   }
 
-  console.log(trace1);
-  graph = []; // graph = [trace1, trace2, trace3, trace4];
-  // Plotly.newPlot(graf, graph, { responsive: false });
-  // let update = {
-  //     'marker': {
-  //         color: "red",
-  //         size: 16
-  //     }
-  // }
-  // let d = [
-  //     {x: trace2.x, y: trace2.y}
-  // ]
-  // Plotly.restyle(graf, update, graph);
-  // graf = document.querySelector("#simulaciaGraf");
-
+  graph = [];
   myInterval = setInterval(function () {
-    // console.log("hi", count);
     Plotly.extendTraces(graf, {
       y: [[trace1.y[count]], [trace2.y[count]], [trace3.y[count]], [trace4.y[count]]],
-      x: [[count], [count], [count], [count]] // y: [[data1[0][count]["x0"]], [data2[0][count]["x3"]], [data2[0][count]["x0"]], [data2[0][count]["x1"]]],
-      // x: [[count], [count], [count], [count]],
-
+      x: [[count], [count], [count], [count]]
     }, [0, 1, 2, 3]);
     cnt++;
-    count++; // if(cnt > 500) {
-    //     Plotly.relayout(graf, {
-    //         xaxis: {
-    //             range: [cnt-500,cnt]
-    //         }
-    //     })
-    // }
-
+    count++;
     if (cnt > 500) clearInterval(myInterval);
-  }, 10); // var cnt = 0;
-  // var interval = setInterval(function() {
-  // Plotly.extendTraces(graf, {
-  //     x: [trace1.x, trace2.x, trace3.x, trace4.x],
-  //     y: [trace1.y, trace2.y, trace3.y, trace4.y]
-  // }, [0, 1, 2, 3])
-  // if(++cnt === 100) clearInterval(interval);
-  // }, 300);
+  }, 10);
 };
 
 var font = "Arial";
 var fontsize = 20;
 var baselayer = new Konva.Stage({
   container: "simulationAnim",
-  // id of container <div>
   width: 850,
   height: 200
 });
@@ -1151,8 +1082,7 @@ imageObj.onload = function () {
           case 0:
             cnt = 0;
             count = 0;
-            clearInterval(myInterval); // graf = document.querySelector("#simulaciaGraf");
-
+            clearInterval(myInterval);
             graph = [];
             faketrace1.x = [];
             faketrace1.y = [];
@@ -1161,17 +1091,13 @@ imageObj.onload = function () {
             faketrace3.x = [];
             faketrace3.y = [];
             faketrace4.x = [];
-            faketrace4.y = []; // Plotly.deleteTraces(graf, [0,1,2,3]);
-
+            faketrace4.y = [];
             anim.stop();
             data1 = [];
             data2 = [];
             rValue = document.querySelector("#rValue");
             rInput = rValue.value === null || isNaN(rValue.value) || rValue.value > 0.2 || rValue.value < -0.2 ? 0.1 : rValue.value;
-            url = "".concat("http://localhost", "/api/octaveAnimation?apikey=").concat("aaaaaaaaaaaaaaaaaaaaaa", "&rValue=").concat(rInput); // if (animI === 1) {
-            //     url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&iteration='1'`;
-            // }
-
+            url = "".concat("http://localhost", "/api/octaveAnimation?apikey=").concat("aaaaaaaaaaaaaaaaaaaaaa", "&rValue=").concat(rInput);
             request = new Request(url, {
               method: "GET"
             });
@@ -1187,7 +1113,6 @@ imageObj.onload = function () {
             respJSON = _context.sent;
             data1.push(respJSON.data.y);
             data2.push(respJSON.data.x);
-            console.log(data2[0]);
             i = 0;
             anim = new Konva.Animation(function (frame) {
               if (i === data2[0].length) {
@@ -1211,39 +1136,13 @@ imageObj.onload = function () {
             });
             animI = animI === 0 ? 1 : 0;
 
-          case 34:
+          case 33:
           case "end":
             return _context.stop();
         }
       }
     }, _callee);
-  }))); // setInterval(async () => {
-  //     anim.stop();
-  //     data1 = [];
-  //     data2 = [];
-  //     let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
-  //     if (r !== null) {
-  //         url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&iteration='1'`;
-  //     }
-  //     const request = new Request(url, {
-  //         method: "GET",
-  //     });
-  //     const respData = await fetch(request);
-  //     const respJSON = await respData.json();
-  //     data1.push(respJSON.data.y);
-  //     data2.push(respJSON.data.x);
-  //     let i = 0;
-  //     anim = new Konva.Animation(function (frame) {
-  //         if (i === data2[0].length) {
-  //             i = 0;
-  //         }
-  //         image2.scaleX(1 + data2[0][i]["x3"]);
-  //         rect2.x(data2[0][i]["x3"] + rect2.x());
-  //         i++;
-  //     }, animlayer);
-  //     anim.start();
-  //     draw();
-  // }, 5000);
+  })));
 };
 
 imageObj.src = "".concat("http://localhost", "/storage/images/spring.png");
