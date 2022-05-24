@@ -30,9 +30,14 @@
         </form> --}}
         </a>
     </h3>
+    <h3 class="pr-6">
+        <a href="{{ route("documentation") }}" class="text-black hover:text-blue-500">
+            {{ __("Documentation") }}
+        </a>
+    </h3>
     @if (isset($secondLanguage) && isset($currentLanguage))
     <h3>
-    
+
         @if($currentLanguage == "SK")
         🇸🇰
         @endif

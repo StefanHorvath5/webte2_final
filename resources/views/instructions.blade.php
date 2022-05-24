@@ -1,14 +1,11 @@
-@if(!isset($download))
-@include('layouts.customNavigation')
-@endif
 <!DOCTYPE html>
-<html lang="{{App::getLocale() == "en" ? "en" : "sk";}}">
+<html lang="{{App::getLocale() == "en" ? "en" : "sk"}}">
 
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Webte2 - Final</title>
 
         @if(!isset($download))
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -17,6 +14,7 @@
     </head>
 
     <body>
+
         <style>
             .instructions {
                 font-family: "DeJaVu Sans Mono", monospace;
@@ -31,7 +29,11 @@
             }
 
             .params {
-                font-weight: bold;
+                display: block;
+            }
+
+            .paramName {
+                text-decoration: underline;
             }
 
             .descOfEndpoint {
@@ -66,9 +68,11 @@
 
         </style>
 
-
+        @if(!isset($download))
+        @include('layouts.customNavigation')
+        @endif
         <div class="instructions" style="width: 75%;padding: 8px;">
-            <h2 style="font-size: 24;">{{ __("Instructions") }}</h2>
+            <h2 style="font-size: 24px;font-weight:bold; margin-bottom:5px">{{ __("Instructions") }}</h2>
             <p>{{ __("The webpage allows the users to work with Octave. Inputting Octave commands into the") }}
                 <b>{{ __("General use") }}</b>
                 {{ __("textbox, allows the user to run standard Octave commands, returning the program's output") }}.
@@ -89,8 +93,9 @@
                     <span class="post">POST:</span>&nbsp;
                     <span class="endpoint">/octave</span>
                     <span class="descOfEndpoint">-> {{ __("executes an Octave command returning its' output") }}</span>
-                    <span class="params">Body:</span>
-                    <span>{{ __("apikey(url param or in body), query") }}</span>
+                    <span class="params"><b>{{ __("Request body") }}: </b><span
+                            class="paramName">apikey</span>({{ __("url param or in request body") }}),
+                        <span class="paramName">query</span></span>
                 </li>
                 <hr>
                 <li>
@@ -99,8 +104,10 @@
                     <span class="descOfEndpoint">->
                         {{ __("runs the predefined Octave animation program, returning the x,y,t values") }}</span>
 
-                    <span class="params">Url params: </span>
-                    <span>{{ __("apikey, rValue(optional and between -0.2 and 0.2)") }}</span>
+                    <span class="params"><b>{{ __("Url params") }}:
+                        </b>
+                        <span class="paramName">apikey</span>, <span
+                            class="paramName">rValue</span>({{ __("optional and between -0.2 and 0.2") }})</span>
                 </li>
                 <hr>
                 <li>

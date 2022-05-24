@@ -41,6 +41,10 @@ Route::get('/instructions', function () {
     return view('instructions')->with("secondLanguage", App::getLocale() == "en" ? "SK" : "EN")->with("currentLanguage", App::getLocale() == "en" ? "EN" : "SK");
 })->middleware(["language"])->name('instructions');
 
+Route::get('/documentation', function () {
+    return view('documentation')->with("secondLanguage", App::getLocale() == "en" ? "SK" : "EN")->with("currentLanguage", App::getLocale() == "en" ? "EN" : "SK");
+})->middleware(["language"])->name('documentation');
+
 Route::get('/logs', function () {
     return view('logs')->with("secondLanguage", App::getLocale() == "en" ? "SK" : "EN")->with("currentLanguage", App::getLocale() == "en" ? "EN" : "SK");
 })->middleware(["language"])->name('logs');
