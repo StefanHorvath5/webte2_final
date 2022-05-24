@@ -868,29 +868,29 @@ submitButton.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE
       switch (_context.prev = _context.next) {
         case 0:
           outputDiv = document.querySelector("#outputDiv");
-          inputCommand = document.querySelector("#inputCommand").value;
-          console.log(inputCommand);
-          url = "/api/octave?apikey=".concat("aaaaaaaaaaaaaaaaaaaaaa");
+          inputCommand = document.querySelector("#inputCommand").value; // console.log(inputCommand);
+
+          url = "".concat("http://localhost", "/api/octave?apikey=").concat("aaaaaaaaaaaaaaaaaaaaaa");
           request = new Request(url, {
             method: "POST",
             body: JSON.stringify({
               query: inputCommand
             })
           });
-          _context.next = 7;
+          _context.next = 6;
           return fetch(request);
 
-        case 7:
+        case 6:
           respData = _context.sent;
-          _context.next = 10;
+          _context.next = 9;
           return respData.json();
 
-        case 10:
+        case 9:
           respJSON = _context.sent;
-          console.log(respJSON);
+          // console.log(respJSON);
           outputDiv.innerHTML = respJSON.success === "true" ? respJSON.data : respJSON.success;
 
-        case 13:
+        case 11:
         case "end":
           return _context.stop();
       }

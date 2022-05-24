@@ -860,22 +860,22 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var animationDiv = document.querySelector("#animationDiv");
-var graf = document.querySelector("#simulaciaGraf"); // let r = null;
-// setInterval(async () => {
-//     let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
-//     if (r !== null) {
-//         url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&query=${r}`;
-//     }
-//     const request = new Request(url, {
-//         method: "GET",
-//     });
-//     const respData = await fetch(request);
-//     const respJSON = await respData.json();
-//     console.log(respJSON);
-//     animationDiv.innerHTML = "r: " + respJSON.r;
-//     r = respJSON.r;
-// }, 1000);
+var simulationAnim = document.querySelector("#simulationAnim");
+var graphContainer = document.querySelector("#graphContainer");
+var graf = document.querySelector("#simulaciaGraf");
+var animationCheckbox = document.querySelector("#animationCheckbox");
+var graphCheckbox = document.querySelector("#graphCheckbox");
+animationCheckbox.addEventListener("input", function () {
+  simulationAnim.style.display = animationCheckbox.checked ? "block" : "none";
+});
+graphCheckbox.addEventListener("input", function () {
+  graphContainer.style.display = graphCheckbox.checked ? "block" : "none";
+});
+
+window.onload = function () {
+  animationCheckbox.checked = true;
+  graphCheckbox.checked = true;
+};
 
 var trace1 = {
   x: [],
@@ -885,7 +885,7 @@ var trace1 = {
     color: "rgba(253,96,178,1)",
     width: 3
   },
-  name: "Sinus"
+  name: "x0"
 };
 var trace2 = {
   x: [],
@@ -895,7 +895,7 @@ var trace2 = {
     color: "rgb(76,226,245,1)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x3"
 };
 var trace3 = {
   x: [],
@@ -905,7 +905,7 @@ var trace3 = {
     color: "rgb(76,169,250)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x2"
 };
 var trace4 = {
   x: [],
@@ -915,7 +915,7 @@ var trace4 = {
     color: "rgb(163,76,245)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x1"
 };
 var faketrace1 = {
   x: [],
@@ -925,7 +925,7 @@ var faketrace1 = {
     color: "rgba(253,96,178,1)",
     width: 3
   },
-  name: "Sinus"
+  name: "x0"
 };
 var faketrace2 = {
   x: [],
@@ -935,7 +935,7 @@ var faketrace2 = {
     color: "rgb(76,226,245,1)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x3"
 };
 var faketrace3 = {
   x: [],
@@ -945,7 +945,7 @@ var faketrace3 = {
     color: "rgb(76,169,250)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x2"
 };
 var faketrace4 = {
   x: [],
@@ -955,37 +955,25 @@ var faketrace4 = {
     color: "rgb(163,76,245)",
     width: 3
   },
-  name: "Cosinus"
+  name: "x1"
 };
 var r = null;
 var data1 = [];
-var data2 = []; // setInterval(async () => {
-//     data1 = [];
-//     data2 = [];
-//     let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
-//     if (r !== null) {
-//         url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&query=${r}`;
-//     }
-//     const request = new Request(url, {
-//         method: "GET",
-//     });
-//     const respData = await fetch(request);
-//     const respJSON = await respData.json();
-//     data1.push(respJSON.data.y);
-//     data2.push(respJSON.data.x);
-//     // console.log("data1 ");
-//     // console.log("data2 ");
-//     draw();
-// }, 5000);
-
+var data2 = [];
 var cnt = 0;
 var count = 0;
 var myInterval;
 var graph;
 
 var draw = function draw() {
-  // let graph = [trace1, trace2, trace3, trace4];
-  // graf.innerHTML = ""
+  trace1.x = [];
+  trace1.y = [];
+  trace2.x = [];
+  trace2.y = [];
+  trace3.x = [];
+  trace3.y = [];
+  trace4.x = [];
+  trace4.y = [];
   graph = [faketrace1, faketrace2, faketrace3, faketrace4];
   Plotly.newPlot(graf, graph, {
     responsive: false
@@ -1005,54 +993,22 @@ var draw = function draw() {
     trace4.x.push(_i);
   }
 
-  console.log(trace1);
-  graph = []; // graph = [trace1, trace2, trace3, trace4];
-  // Plotly.newPlot(graf, graph, { responsive: false });
-  // let update = {
-  //     'marker': {
-  //         color: "red",
-  //         size: 16
-  //     }
-  // }
-  // let d = [
-  //     {x: trace2.x, y: trace2.y}
-  // ]
-  // Plotly.restyle(graf, update, graph);
-
-  graf = document.querySelector("#simulaciaGraf");
+  graph = [];
   myInterval = setInterval(function () {
-    console.log("hi", count);
     Plotly.extendTraces(graf, {
       y: [[trace1.y[count]], [trace2.y[count]], [trace3.y[count]], [trace4.y[count]]],
-      x: [[count], [count], [count], [count]] // y: [[data1[0][count]["x0"]], [data2[0][count]["x3"]], [data2[0][count]["x0"]], [data2[0][count]["x1"]]],
-      // x: [[count], [count], [count], [count]],
-
+      x: [[count], [count], [count], [count]]
     }, [0, 1, 2, 3]);
     cnt++;
-    count++; // if(cnt > 500) {
-    //     Plotly.relayout(graf, {
-    //         xaxis: {
-    //             range: [cnt-500,cnt]
-    //         }
-    //     })
-    // }
-
+    count++;
     if (cnt > 500) clearInterval(myInterval);
-  }, 10); // var cnt = 0;
-  // var interval = setInterval(function() {
-  // Plotly.extendTraces(graf, {
-  //     x: [trace1.x, trace2.x, trace3.x, trace4.x],
-  //     y: [trace1.y, trace2.y, trace3.y, trace4.y]
-  // }, [0, 1, 2, 3])
-  // if(++cnt === 100) clearInterval(interval);
-  // }, 300);
+  }, 10);
 };
 
 var font = "Arial";
 var fontsize = 20;
 var baselayer = new Konva.Stage({
   container: "simulationAnim",
-  // id of container <div>
   width: 850,
   height: 200
 });
@@ -1119,15 +1075,14 @@ imageObj.onload = function () {
   var anim = new Konva.Animation(function (frame) {});
   var animI = 0;
   animationButton.addEventListener("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-    var url, request, respData, respJSON, i;
+    var rValue, rInput, url, request, respData, respJSON, i;
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             cnt = 0;
             count = 0;
-            clearInterval(myInterval); // graf = document.querySelector("#simulaciaGraf");
-
+            clearInterval(myInterval);
             graph = [];
             faketrace1.x = [];
             faketrace1.y = [];
@@ -1136,31 +1091,28 @@ imageObj.onload = function () {
             faketrace3.x = [];
             faketrace3.y = [];
             faketrace4.x = [];
-            faketrace4.y = []; // Plotly.deleteTraces(graf, [0,1,2,3]);
-
+            faketrace4.y = [];
             anim.stop();
             data1 = [];
             data2 = [];
-            url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa"; // if (animI === 1) {
-            //     url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&iteration='1'`;
-            // }
-
+            rValue = document.querySelector("#rValue");
+            rInput = rValue.value === null || isNaN(rValue.value) || rValue.value > 0.2 || rValue.value < -0.2 ? 0.1 : rValue.value;
+            url = "".concat("http://localhost", "/api/octaveAnimation?apikey=").concat("aaaaaaaaaaaaaaaaaaaaaa", "&rValue=").concat(rInput);
             request = new Request(url, {
               method: "GET"
             });
-            _context.next = 19;
+            _context.next = 21;
             return fetch(request);
 
-          case 19:
+          case 21:
             respData = _context.sent;
-            _context.next = 22;
+            _context.next = 24;
             return respData.json();
 
-          case 22:
+          case 24:
             respJSON = _context.sent;
             data1.push(respJSON.data.y);
             data2.push(respJSON.data.x);
-            console.log(data2[0]);
             i = 0;
             anim = new Konva.Animation(function (frame) {
               if (i === data2[0].length) {
@@ -1168,8 +1120,11 @@ imageObj.onload = function () {
                 anim.stop();
               }
 
+              image.scaleX(1 - data2[0][i]["x1"] / 5);
+              rect1.x(image.width() * image.scaleX() - image.width());
+              image2.x(image.width() * image.scaleX() + 70);
               image2.scaleX(1 - data2[0][i]["x3"] / 5);
-              rect2.x(image2.width() * image2.scaleX() - image2.width());
+              rect2.x(image2.width() * image2.scaleX() - image2.width() + image.width() * image.scaleX() - image.width());
               i++;
             }, animlayer);
             anim.start();
@@ -1181,42 +1136,16 @@ imageObj.onload = function () {
             });
             animI = animI === 0 ? 1 : 0;
 
-          case 32:
+          case 33:
           case "end":
             return _context.stop();
         }
       }
     }, _callee);
-  }))); // setInterval(async () => {
-  //     anim.stop();
-  //     data1 = [];
-  //     data2 = [];
-  //     let url = "/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa";
-  //     if (r !== null) {
-  //         url = `/api/octaveAnimation?apikey=aaaaaaaaaaaaaaaaaaaaaa&iteration='1'`;
-  //     }
-  //     const request = new Request(url, {
-  //         method: "GET",
-  //     });
-  //     const respData = await fetch(request);
-  //     const respJSON = await respData.json();
-  //     data1.push(respJSON.data.y);
-  //     data2.push(respJSON.data.x);
-  //     let i = 0;
-  //     anim = new Konva.Animation(function (frame) {
-  //         if (i === data2[0].length) {
-  //             i = 0;
-  //         }
-  //         image2.scaleX(1 + data2[0][i]["x3"]);
-  //         rect2.x(data2[0][i]["x3"] + rect2.x());
-  //         i++;
-  //     }, animlayer);
-  //     anim.start();
-  //     draw();
-  // }, 5000);
+  })));
 };
 
-imageObj.src = "/storage/images/spring.png";
+imageObj.src = "".concat("http://localhost", "/storage/images/spring.png");
 })();
 
 /******/ })()
