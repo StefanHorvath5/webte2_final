@@ -60,7 +60,7 @@
     "Exec given query in octave cli - requires: apikey, query": "Spúštanie zadaného príkazu v octave cli a vrátenie výstupu z octave-cli - potrebuje: apikey, query",
     "Exec predefined query in octave cli - requires: apikey, rValue(optional)": "Spúštanie preddefinovaného príkazu v octave cli a vrátenie výstupu z octave-cli - potrebuje: apikey, query",
     "Download CSV of logs - requires: apikey": "Sťahovanie CSV logov - potrebuje: apikey",
-    "Send mail of logs to predefined email address - requires: apikey": "Posielanie emailov logov na preddefinovanú adresu",
+    "Send mail of logs to predefined email address - requires: apikey": "Posielanie emailov logov na preddefinovanú adresu - potrebuje: apikey",
     "Tasks distribution": "Rozdelenie práce",
     "Bilingualism": "Dvojjazyčnosť",
     "API for CAS secured by API key": "API ku CAS zabezpečené API kľúčom alebo tokenom",
